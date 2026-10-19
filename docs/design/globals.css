@@ -1,0 +1,75 @@
+/* Next.js + Tailwind v4 + shadcn/ui entry. Use next-themes with attribute="class", themes={["dark","light"]}, defaultTheme="dark". */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./tokens.css";
+
+@custom-variant light (&:is(.light *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-movie: var(--type-movie);
+  --color-series: var(--type-series);
+  --color-anime: var(--type-anime);
+  --color-status-pending: var(--status-pending);
+  --color-status-watching: var(--status-watching);
+  --color-status-completed: var(--status-completed);
+  --color-status-paused: var(--status-paused);
+  --color-status-dropped: var(--status-dropped);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-border: var(--sidebar-border);
+
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  /* type scale: size / line-height */
+  --text-display: 2.5rem;   --text-display--line-height: 1.1;  --text-display--letter-spacing: -0.025em;
+  --text-h1: 2rem;          --text-h1--line-height: 1.15;      --text-h1--letter-spacing: -0.02em;
+  --text-h2: 1.375rem;      --text-h2--line-height: 1.25;      --text-h2--letter-spacing: -0.01em;
+  --text-h3: 1.0625rem;     --text-h3--line-height: 1.35;
+  --text-body: 0.875rem;    --text-body--line-height: 1.5;
+  --text-small: 0.8125rem;  --text-small--line-height: 1.45;
+  --text-caption: 0.75rem;  --text-caption--line-height: 1.35;
+
+  --radius-xs: calc(var(--radius) - 6px);  /* 4px  chips internos */
+  --radius-sm: calc(var(--radius) - 4px);  /* 6px  badges, kbd */
+  --radius-md: calc(var(--radius) - 2px);  /* 8px  pósters, inputs */
+  --radius-lg: var(--radius);              /* 10px botones, cards */
+  --radius-xl: calc(var(--radius) + 4px);  /* 14px paneles */
+  --radius-2xl: calc(var(--radius) + 10px);/* 20px sheets móviles */
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-poster: var(--shadow-poster);
+
+  --spacing: 0.25rem; /* base 4px: 1,2,3,4,5,6,8,10,12,16 */
+  --aspect-poster: 2 / 3;
+  --aspect-backdrop: 16 / 9;
+}
+
+@layer base {
+  * { @apply border-border outline-ring; }
+  body { @apply bg-background text-foreground font-sans antialiased; }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+}

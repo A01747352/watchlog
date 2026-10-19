@@ -1,0 +1,129 @@
+/*
+ * Watchlog — tokens de diseño.
+ * Fuente: docs/design/tokens.css + docs/design/HANDOFF.md (§2).
+ *
+ * El tema oscuro es el predeterminado (:root). La clase .light en <html> activa el claro
+ * (next-themes con attribute="class"). Los nombres siguen la convención de shadcn/ui.
+ * Estos valores se exponen a Tailwind v4 en globals.css (@theme inline).
+ */
+
+:root,
+.dark {
+  color-scheme: dark;
+
+  /* Superficies */
+  --background: oklch(0.16 0.008 285);
+  --foreground: oklch(0.965 0.004 285);
+  --card: oklch(0.195 0.009 285);
+  --card-foreground: oklch(0.965 0.004 285);
+  --popover: oklch(0.215 0.01 285);
+  --popover-foreground: oklch(0.965 0.004 285);
+  --secondary: oklch(0.245 0.01 285);
+  --secondary-foreground: oklch(0.965 0.004 285);
+  --muted: oklch(0.225 0.009 285);
+  --muted-foreground: oklch(0.74 0.012 285);
+  --subtle-foreground: oklch(0.64 0.012 285);
+  --accent: oklch(0.265 0.012 285);
+  --accent-foreground: oklch(0.965 0.004 285);
+  --border: oklch(0.29 0.01 285);
+  --input: oklch(0.31 0.01 285);
+  --sidebar: oklch(0.14 0.008 285);
+  --sidebar-border: oklch(0.24 0.009 285);
+
+  /* Acción y marca: primario = tinta invertida; un solo acento cálido (coral) */
+  --primary: oklch(0.965 0.004 285);
+  --primary-foreground: oklch(0.18 0.008 285);
+  --brand: oklch(0.76 0.14 40);
+  --brand-foreground: oklch(0.2 0.03 40);
+  --ring: oklch(0.76 0.14 40);
+  --destructive: oklch(0.72 0.16 25);
+
+  /* Tipo de contenido (siempre con forma + texto) */
+  --type-movie: oklch(0.82 0.12 80);
+  --type-series: oklch(0.8 0.11 225);
+  --type-anime: oklch(0.78 0.13 315);
+
+  /* Estado en biblioteca */
+  --status-pending: oklch(0.74 0.012 285);
+  --status-watching: oklch(0.8 0.14 155);
+  --status-completed: oklch(0.965 0.004 285);
+  --status-paused: oklch(0.74 0.012 285);
+  --status-dropped: oklch(0.72 0.16 25);
+
+  /* Badges sobre póster: oscuros y fijos en ambos temas */
+  --on-poster: rgb(12 12 16 / 0.72);
+  --on-poster-foreground: oklch(1 0 0);
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.4);
+  --shadow-md: 0 1px 2px oklch(0 0 0 / 0.35), 0 8px 24px -8px oklch(0 0 0 / 0.55);
+  --shadow-lg: 0 2px 4px oklch(0 0 0 / 0.3), 0 24px 48px -12px oklch(0 0 0 / 0.65);
+  --shadow-poster: 0 1px 0 oklch(1 0 0 / 0.06) inset, 0 10px 28px -10px oklch(0 0 0 / 0.7);
+
+  /*
+   * Familias. --font-*-loaded las define next/font en apps/web (nombres con hash);
+   * si no existen (p. ej. fuera de Next) se usa el nombre real de Google Fonts.
+   */
+  --font-display: var(--font-display-loaded, "Bricolage Grotesque"), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-sans-loaded, "Geist"), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-loaded, "Geist Mono"), ui-monospace, monospace;
+
+  /* Título de página: 28px en móvil, 34px en escritorio (≥1024px) */
+  --page-title-size: 1.75rem;
+
+  /* Radio base: lg = 10px; el resto se deriva en globals.css */
+  --radius: 0.625rem;
+}
+
+.light {
+  color-scheme: light;
+
+  --background: oklch(0.985 0.003 285);
+  --foreground: oklch(0.2 0.01 285);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.01 285);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.01 285);
+  --secondary: oklch(0.955 0.005 285);
+  --secondary-foreground: oklch(0.2 0.01 285);
+  --muted: oklch(0.965 0.004 285);
+  --muted-foreground: oklch(0.46 0.012 285);
+  --subtle-foreground: oklch(0.52 0.012 285);
+  --accent: oklch(0.94 0.006 285);
+  --accent-foreground: oklch(0.2 0.01 285);
+  --border: oklch(0.905 0.006 285);
+  --input: oklch(0.88 0.006 285);
+  --sidebar: oklch(0.97 0.004 285);
+  --sidebar-border: oklch(0.91 0.006 285);
+
+  --primary: oklch(0.2 0.01 285);
+  --primary-foreground: oklch(0.985 0.003 285);
+  --brand: oklch(0.58 0.16 40);
+  --brand-foreground: oklch(0.99 0.005 40);
+  --ring: oklch(0.58 0.16 40);
+  --destructive: oklch(0.54 0.19 25);
+
+  --type-movie: oklch(0.52 0.12 70);
+  --type-series: oklch(0.5 0.12 235);
+  --type-anime: oklch(0.5 0.15 315);
+
+  --status-pending: oklch(0.46 0.012 285);
+  --status-watching: oklch(0.5 0.13 155);
+  --status-completed: oklch(0.2 0.01 285);
+  --status-paused: oklch(0.46 0.012 285);
+  --status-dropped: oklch(0.54 0.19 25);
+
+  --on-poster: rgb(12 12 16 / 0.72);
+  --on-poster-foreground: oklch(1 0 0);
+
+  --shadow-sm: 0 1px 2px oklch(0.2 0.02 285 / 0.08);
+  --shadow-md: 0 1px 2px oklch(0.2 0.02 285 / 0.06), 0 8px 24px -10px oklch(0.2 0.02 285 / 0.18);
+  --shadow-lg: 0 2px 4px oklch(0.2 0.02 285 / 0.06), 0 24px 48px -16px oklch(0.2 0.02 285 / 0.25);
+  --shadow-poster: 0 1px 2px oklch(0.2 0.02 285 / 0.12), 0 10px 24px -12px oklch(0.2 0.02 285 / 0.35);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-title-size: 2.125rem;
+  }
+}

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&amp;family=Geist:wght@400..700&amp;family=Geist+Mono:wght@400..600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@0.460.0/font/lucide.css">
+<link rel="stylesheet" href="./tokens.css">
+<style>
+body{margin:0;-webkit-font-smoothing:antialiased}
+a{color:var(--foreground);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--brand)}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+@keyframes wlpulse{0%,100%{opacity:1}50%{opacity:.45}}
+</style>
+</helmet>
+<div class="{{ themeClass }}" style="min-height:100vh;background:var(--background);color:var(--foreground);font-family:var(--font-sans)">
+<div style="max-width:1200px;margin:0 auto;padding:48px 32px 0;display:flex;flex-direction:column;gap:72px">
+
+<header style="display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:32px;border-bottom:1px solid var(--border)">
+<div style="flex:1;min-width:280px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:10px"><div style="width:24px;height:24px;border-radius:7px;background:var(--brand);display:flex;align-items:center;justify-content:center"><div style="width:9px;height:9px;border-radius:50%;background:var(--background)"></div></div><span style="font:650 20px/1 var(--font-display);letter-spacing:-0.02em">Watchlog</span><span style="font:500 12px var(--font-mono);color:var(--subtle-foreground)">sistema de diseño · v0.1</span></div>
+<h1 style="margin:0;font:600 44px/1.05 var(--font-display);letter-spacing:-0.03em;max-width:720px;text-wrap:pretty">Una interfaz oscura y silenciosa que enmarca los pósters.</h1>
+<p style="margin:0;max-width:620px;font-size:15px;line-height:1.55;color:var(--muted-foreground);text-wrap:pretty">Neutros fríos casi sin saturación, un único acento cálido para foco y nota, y tres colores de tipo que siempre van con forma y texto. Tokens con nombres de shadcn/ui en <code style="font:500 13px var(--font-mono)">tokens.css</code> y <code style="font:500 13px var(--font-mono)">globals.css</code> (Tailwind v4).</p>
+</div>
+<button type="button" onClick="{{ toggleTheme }}" style="height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:550" style-hover="background:var(--accent)"><i class="icon-{{ themeIcon }}" aria-hidden="true" style="font-size:16px"></i>{{ themeLabel }}</button>
+</header>
+
+<section style="display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;align-items:baseline;gap:14px"><span style="font:500 12px var(--font-mono);color:var(--subtle-foreground)">01</span><h2 style="margin:0;font:600 26px/1.2 var(--font-display);letter-spacing:-0.02em">Color</h2></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:16px">
+<sc-for list="{{ themes }}" as="th" hint-placeholder-count="2">
+<div class="{{ th.cls }}" style="background:var(--background);color:var(--foreground);border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:20px">
+<div style="font:500 12px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted-foreground)">{{ th.name }}</div>
+<sc-for list="{{ th.groups }}" as="g" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="font-size:13px;font-weight:600">{{ g.name }}</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px">
+<sc-for list="{{ g.tokens }}" as="t" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+<div style="height:44px;border-radius:8px;background:var({{ t.v }});border:1px solid var(--border)"></div>
+<span style="font:500 11px var(--font-mono);color:var(--foreground);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">--{{ t.n }}</span>
+<span style="font:400 10px var(--font-mono);color:var(--subtle-foreground);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ t.val }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+<p style="margin:0;font-size:13px;line-height:1.5;color:var(--muted-foreground);max-width:760px">Los tres tipos comparten luminosidad y croma y cambian solo el tono. Nunca se usa el color solo: cuadrado = Película, círculo = Serie, rombo = Anime, siempre con su etiqueta. Todo el texto sobre fondo cumple AA (4.5:1).</p>
+</section>
+
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:40px">
+<div style="display:flex;flex-direction:column;gap:22px;grid-column:1 / -1">
+<div style="display:flex;align-items:baseline;gap:14px"><span style="font:500 12px var(--font-mono);color:var(--subtle-foreground)">02</span><h2 style="margin:0;font:600 26px/1.2 var(--font-display);letter-spacing:-0.02em">Tipografía</h2></div>
+<div style="display:flex;flex-direction:column;border-top:1px solid var(--border)">
+<sc-for list="{{ typeScale }}" as="ts" hint-placeholder-count="7">
+<div style="display:grid;grid-template-columns:150px minmax(0,1fr);gap:20px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--border)">
+<div style="display:flex;flex-direction:column;gap:3px"><span style="font:500 12px var(--font-mono)">{{ ts.name }}</span><span style="font:400 11px var(--font-mono);color:var(--subtle-foreground)">{{ ts.spec }}</span></div>
+<span style="font-family:{{ ts.family }};font-size:{{ ts.size }};font-weight:{{ ts.weight }};line-height:1.2;letter-spacing:{{ ts.track }};color:{{ ts.color }}">{{ ts.sample }}</span>
+</div>
+</sc-for>
+</div>
+<p style="margin:0;font-size:13px;color:var(--muted-foreground)">Bricolage Grotesque para titulares (personalidad), Geist para la interfaz, Geist Mono para notas, años, episodios y datos.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<h3 style="margin:0;font:600 17px var(--font-display)">Radios</h3>
+<div style="display:flex;gap:14px;flex-wrap:wrap">
+<sc-for list="{{ radii }}" as="r" hint-placeholder-count="6">
+<div style="display:flex;flex-direction:column;gap:6px;align-items:center"><div style="width:56px;height:56px;background:var(--secondary);border:1px solid var(--border);border-radius:{{ r.v }}"></div><span style="font:500 11px var(--font-mono)">{{ r.n }}</span><span style="font:400 10px var(--font-mono);color:var(--subtle-foreground)">{{ r.v }}</span></div>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<h3 style="margin:0;font:600 17px var(--font-display)">Espaciado · base 4px</h3>
+<div style="display:flex;flex-direction:column;gap:6px">
+<sc-for list="{{ spacing }}" as="sp" hint-placeholder-count="8">
+<div style="display:flex;align-items:center;gap:12px"><span style="width:28px;font:500 11px var(--font-mono);color:var(--subtle-foreground)">{{ sp.n }}</span><div style="height:10px;border-radius:2px;background:var(--brand);width:{{ sp.w }}"></div><span style="font:400 11px var(--font-mono);color:var(--subtle-foreground)">{{ sp.w }}</span></div>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<h3 style="margin:0;font:600 17px var(--font-display)">Sombras</h3>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+<sc-for list="{{ shadows }}" as="sh" hint-placeholder-count="4">
+<div style="height:72px;border-radius:10px;background:var(--card);box-shadow:var({{ sh.v }});display:flex;align-items:flex-end;padding:10px;font:500 11px var(--font-mono)">--{{ sh.v }}</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;align-items:baseline;gap:14px"><span style="font:500 12px var(--font-mono);color:var(--subtle-foreground)">03</span><h2 style="margin:0;font:600 26px/1.2 var(--font-display);letter-spacing:-0.02em">Componentes base</h2></div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:20px">
+
+<div style="border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:16px">
+<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">Button</span>
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+<button type="button" style="height:40px;padding:0 16px;border-radius:10px;border:0;background:var(--primary);color:var(--primary-foreground);font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:8px" style-hover="opacity:.9"><i class="icon-plus" aria-hidden="true" style="font-size:16px"></i>Registrar</button>
+<button type="button" style="height:40px;padding:0 16px;border-radius:10px;border:1px solid var(--border);background:var(--secondary);font-weight:550;font-size:14px;cursor:pointer" style-hover="background:var(--accent)">Secundario</button>
+<button type="button" style="height:40px;padding:0 14px;border-radius:10px;border:0;background:transparent;color:var(--muted-foreground);font-weight:550;font-size:14px;cursor:pointer" style-hover="background:var(--accent);color:var(--foreground)">Fantasma</button>
+<button type="button" aria-label="Más opciones" style="width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:var(--accent)"><i class="icon-ellipsis" aria-hidden="true" style="font-size:16px"></i></button>
+<button type="button" style="height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--destructive);font-weight:550;font-size:13px;cursor:pointer" style-hover="background:var(--accent)">Eliminar</button>
+<button type="button" style="height:40px;padding:0 16px;border-radius:10px;border:0;background:var(--primary);color:var(--primary-foreground);font-weight:600;font-size:14px;outline:2px solid var(--ring);outline-offset:2px">Con foco</button>
+</div>
+</div>
+
+<div style="border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:16px">
+<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">TypeBadge · StatusBadge</span>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ typeBadges }}" as="t" hint-placeholder-count="3">
+<span style="display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 10px;border-radius:6px;background:color-mix(in oklch,{{ t.color }} 14%,transparent);color:{{ t.color }};font-size:12px;font-weight:600"><span style="width:7px;height:7px;background:{{ t.color }};border-radius:{{ t.r }};transform:rotate({{ t.rot }})"></span>{{ t.label }}</span>
+</sc-for>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ statusBadges }}" as="s" hint-placeholder-count="5">
+<span style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;border:1px solid var(--border);font-size:12px;font-weight:550;color:{{ s.color }}"><i class="icon-{{ s.icon }}" aria-hidden="true" style="font-size:12px"></i>{{ s.label }}</span>
+</sc-for>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;padding:12px;border-radius:10px;background:oklch(0.32 0.05 200)">
+<sc-for list="{{ statusBadges }}" as="s" hint-placeholder-count="5">
+<span style="height:22px;padding:0 8px;border-radius:6px;background:rgb(12 12 16/.72);color:#f4f4f6;font-size:11px;font-weight:550;display:flex;align-items:center;gap:5px"><i class="icon-{{ s.icon }}" aria-hidden="true" style="font-size:11px"></i>{{ s.label }}</span>
+</sc-for>
+</div>
+<span style="font-size:12px;color:var(--subtle-foreground)">Sobre póster, el badge es siempre oscuro translúcido con texto blanco, en ambos temas.</span>
+</div>
+
+<div style="border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:16px;grid-column:span 1">
+<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">TitleCard · grid</span>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px">
+<sc-for list="{{ cards }}" as="it" hint-placeholder-count="2">
+<div style="display:flex;flex-direction:column;gap:9px;min-width:0">
+<div style="position:relative;aspect-ratio:2/3;border-radius:8px;overflow:hidden;background:{{ it.bg }};box-shadow:var(--shadow-poster)">
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgb(255 255 255/.035) 0 1px,transparent 1px 9px)"></div>
+<div style="position:absolute;left:8px;bottom:10px;font:500 9px var(--font-mono);color:rgb(255 255 255/.55);text-transform:uppercase;letter-spacing:.06em">póster</div>
+<sc-if value="{{ it.chip }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:7px;left:7px;height:20px;padding:0 7px;border-radius:5px;background:rgb(12 12 16/.72);color:#f4f4f6;font-size:10px;font-weight:550;display:flex;align-items:center;gap:4px"><i class="icon-play" aria-hidden="true" style="font-size:10px"></i>{{ it.chip }}</div></sc-if>
+<sc-if value="{{ it.rating }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:7px;right:7px;height:20px;padding:0 6px;border-radius:5px;background:rgb(12 12 16/.72);color:#f4f4f6;font:600 10px var(--font-mono);display:flex;align-items:center;gap:3px"><span style="color:oklch(0.8 0.13 45)">★</span>{{ it.rating }}</div></sc-if>
+<sc-if value="{{ it.pct }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:0;right:0;bottom:0;height:3px;background:rgb(255 255 255/.18)"><div style="height:100%;width:{{ it.pct }};background:oklch(0.82 0.14 155)"></div></div></sc-if>
+</div>
+<span style="font-size:13px;font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.title }}</span>
+<span style="display:flex;align-items:center;gap:6px;font-size:11px;margin-top:-4px;color:var(--muted-foreground)"><span style="width:6px;height:6px;background:{{ it.color }};border-radius:{{ it.r }};transform:rotate({{ it.rot }})"></span><span style="color:{{ it.color }};font-weight:600">{{ it.type }}</span>· {{ it.year }}</span>
+</div>
+</sc-for>
+<div style="display:flex;flex-direction:column;gap:9px;animation:wlpulse 1.6s ease-in-out infinite" aria-label="Cargando"><div style="aspect-ratio:2/3;border-radius:8px;background:var(--muted)"></div><div style="height:11px;width:80%;border-radius:4px;background:var(--muted)"></div><div style="height:9px;width:50%;border-radius:4px;background:var(--muted)"></div></div>
+</div>
+<span style="font-size:12px;color:var(--subtle-foreground)">Por defecto · Viendo con progreso · Skeleton. Hover: sube 3px. Todo el card es un botón enfocable.</span>
+</div>
+
+<div style="border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:18px">
+<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">RatingInput · 1–10, medios puntos</span>
+<div style="display:flex;align-items:baseline;gap:10px">
+<span style="font:600 48px/1 var(--font-display);letter-spacing:-0.03em;color:var(--brand)">{{ ratingShown }}</span><span style="font:500 15px var(--font-mono);color:var(--subtle-foreground)">/10</span>
+<span style="margin-left:auto;font-size:14px;font-weight:550;color:var(--muted-foreground)">{{ ratingWord }}</span>
+</div>
+<div role="slider" tabindex="0" aria-label="Mi nota" aria-valuemin="1" aria-valuemax="10" aria-valuenow="{{ rating }}" aria-valuetext="{{ ratingAria }}" onKeyDown="{{ onRatingKey }}" onMouseLeave="{{ onRatingLeave }}" style="display:grid;grid-template-columns:repeat(10,1fr);gap:4px;border-radius:8px;cursor:pointer">
+<sc-for list="{{ ratingCells }}" as="c" hint-placeholder-count="10">
+<div onMouseMove="{{ c.onMove }}" onClick="{{ c.onClick }}" style="height:34px;border-radius:6px;background:var(--secondary);position:relative;overflow:hidden">
+<div style="position:absolute;left:0;top:0;bottom:0;width:{{ c.fill }};background:var(--brand)"></div>
+<span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:500 10px var(--font-mono);color:{{ c.numColor }}">{{ c.n }}</span>
+</div>
+</sc-for>
+</div>
+<span style="font-size:12px;color:var(--subtle-foreground)">Clic en la mitad izquierda = medio punto. Teclado: ← → ±0.5, teclas 1–9, 0 = 10.</span>
+</div>
+
+<div style="border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:16px">
+<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">EpisodeProgress</span>
+<div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font-size:14px;font-weight:550">T1 · Episodio {{ ep }} de 28</span><span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">{{ epPct }}</span></div>
+<div aria-hidden="true" style="display:grid;grid-template-columns:repeat(28,1fr);gap:2px">
+<sc-for list="{{ epCells }}" as="e" hint-placeholder-count="28"><div style="height:14px;border-radius:2px;background:{{ e.bg }}"></div></sc-for>
+</div>
+<div style="display:flex;gap:8px;align-items:center">
+<button type="button" onClick="{{ epDown }}" aria-label="Quitar un episodio" style="width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-minus" aria-hidden="true" style="font-size:16px"></i></button>
+<button type="button" onClick="{{ epUp }}" style="height:40px;padding:0 14px;border-radius:10px;border:0;background:var(--primary);color:var(--primary-foreground);font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:7px"><i class="icon-plus" aria-hidden="true" style="font-size:16px"></i>Vi el siguiente</button>
+<span style="margin-left:auto;font-size:12px;color:var(--subtle-foreground)">{{ epLeft }}</span>
+</div>
+<span style="font-size:12px;color:var(--subtle-foreground)">Segmentado hasta 52 episodios; a partir de ahí, barra continua.</span>
+</div>
+
+<div style="border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:14px">
+<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">SearchBar · resultados mezclados</span>
+<label style="display:flex;align-items:center;gap:10px;height:44px;padding:0 8px 0 14px;border-radius:10px;background:var(--muted);border:1px solid var(--ring);outline:3px solid color-mix(in oklch,var(--ring) 25%,transparent)">
+<i class="icon-search" aria-hidden="true" style="font-size:16px;color:var(--muted-foreground)"></i>
+<input type="search" value="mono" readonly="" aria-label="Buscar" style="flex:1;border:0;background:transparent;outline:none;font-size:14px">
+<kbd style="font:500 11px var(--font-mono);color:var(--muted-foreground);border:1px solid var(--border);border-radius:5px;padding:3px 6px">esc</kbd>
+</label>
+<div role="listbox" style="border:1px solid var(--border);border-radius:12px;background:var(--popover);box-shadow:var(--shadow-lg);padding:6px;display:flex;flex-direction:column">
+<sc-for list="{{ results }}" as="r" hint-placeholder-count="3">
+<div role="option" style="display:flex;align-items:center;gap:12px;padding:8px;border-radius:8px;background:{{ r.bg }}">
+<div style="width:32px;aspect-ratio:2/3;border-radius:4px;background:{{ r.poster }}"></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:550">{{ r.title }}</span><span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted-foreground)"><span style="width:6px;height:6px;background:{{ r.color }};border-radius:{{ r.r }};transform:rotate({{ r.rot }})"></span><span style="color:{{ r.color }};font-weight:600">{{ r.type }}</span>· {{ r.year }}</span></div>
+<button type="button" style="height:30px;padding:0 10px;border-radius:8px;border:1px solid var(--border);background:var(--background);font-size:12px;font-weight:550;cursor:pointer;display:flex;align-items:center;gap:5px"><i class="icon-check" aria-hidden="true" style="font-size:12px"></i>Visto</button>
+</div>
+</sc-for>
+</div>
+<span style="font-size:12px;color:var(--subtle-foreground)">“Visto” registra en un paso; la nota se pide después, opcional.</span>
+</div>
+
+<div style="border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:14px;grid-column:1 / -1">
+<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">FilterBar</span>
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+<div style="display:flex;padding:3px;border-radius:10px;background:var(--muted);border:1px solid var(--border)">
+<span style="height:30px;padding:0 12px;border-radius:7px;background:var(--card);box-shadow:var(--shadow-sm);display:flex;align-items:center;font-size:13px;font-weight:550">Todo</span>
+<sc-for list="{{ typeBadges }}" as="t" hint-placeholder-count="3"><span style="height:30px;padding:0 12px;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:550;color:var(--muted-foreground)"><span style="width:7px;height:7px;background:{{ t.color }};border-radius:{{ t.r }};transform:rotate({{ t.rot }})"></span>{{ t.plural }}</span></sc-for>
+</div>
+<span style="height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--foreground);background:var(--accent);display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500">Fantasía<i class="icon-chevron-down" aria-hidden="true" style="font-size:13px"></i></span>
+<span style="height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--border);display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted-foreground)">Año: todos<i class="icon-chevron-down" aria-hidden="true" style="font-size:13px"></i></span>
+<span style="height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--border);display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted-foreground)">Nota: todas<i class="icon-chevron-down" aria-hidden="true" style="font-size:13px"></i></span>
+<span style="height:32px;padding:0 12px;border-radius:999px;background:var(--foreground);color:var(--background);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500"><i class="icon-play" aria-hidden="true" style="font-size:12px"></i>Viendo<span style="font:500 11px var(--font-mono);opacity:.7">3</span></span>
+<span style="height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--border);color:var(--muted-foreground);display:flex;align-items:center;gap:6px;font-size:13px"><i class="icon-clock" aria-hidden="true" style="font-size:12px"></i>Pendiente<span style="font:500 11px var(--font-mono);opacity:.7">4</span></span>
+</div>
+<span style="font-size:12px;color:var(--subtle-foreground)">Segmentado para tipo (excluyente) · desplegables-píldora para género, año y nota · chips para estado. Activo = borde en tinta.</span>
+</div>
+
+<div style="border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:14px">
+<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">RecommendationCard</span>
+<sc-if value="{{ recVisible }}" hint-placeholder-val="{{ true }}">
+<article style="display:flex;gap:16px;padding:14px;border-radius:12px;background:var(--card);border:1px solid var(--border)">
+<div style="width:92px;flex-shrink:0;aspect-ratio:2/3;border-radius:7px;background:linear-gradient(165deg,oklch(0.44 0.07 130),oklch(0.24 0.045 130));box-shadow:var(--shadow-poster)"></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
+<span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--brand);font-weight:550"><i class="icon-sparkles" aria-hidden="true" style="font-size:13px"></i>Porque calificaste Frieren con 9.5</span>
+<h4 style="margin:0;font:600 18px/1.2 var(--font-display);letter-spacing:-0.01em">Natsume Yūjinchō</h4>
+<span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted-foreground)"><span style="width:6px;height:6px;background:var(--type-anime);transform:rotate(45deg);border-radius:1px"></span><span style="color:var(--type-anime);font-weight:600">Anime</span>· 2008 · Fantasía, Drama</span>
+<div style="display:flex;gap:8px;margin-top:auto">
+<button type="button" onClick="{{ recAdd }}" style="height:34px;padding:0 12px;border-radius:9px;border:0;background:{{ recAddBg }};color:{{ recAddFg }};font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px"><i class="icon-{{ recAddIcon }}" aria-hidden="true" style="font-size:14px"></i>{{ recAddLabel }}</button>
+<button type="button" onClick="{{ recDismiss }}" style="height:34px;padding:0 12px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--muted-foreground);font-size:13px;font-weight:550;cursor:pointer" style-hover="color:var(--foreground)">Descartar</button>
+</div>
+</div>
+</article>
+</sc-if>
+<sc-if value="{{ recHidden }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="display:flex;align-items:center;gap:10px;padding:14px;border-radius:12px;border:1px dashed var(--border);font-size:13px;color:var(--muted-foreground)">Descartado. No volverá a aparecer.<button type="button" onClick="{{ recUndo }}" style="margin-left:auto;border:0;background:transparent;color:var(--foreground);font-weight:600;cursor:pointer;text-decoration:underline">Deshacer</button></div>
+</sc-if>
+</div>
+
+<div style="border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:14px">
+<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">StatCard</span>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+<div style="padding:16px;border-radius:12px;background:var(--card);border:1px solid var(--border);display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;color:var(--muted-foreground)">Horas vistas</span><span style="font:600 30px/1 var(--font-display);letter-spacing:-0.02em">312<span style="font:500 14px var(--font-mono);color:var(--subtle-foreground);margin-left:4px">h</span></span><span style="font-size:12px;color:var(--status-watching)">+18 h este mes</span></div>
+<div style="padding:16px;border-radius:12px;background:var(--card);border:1px solid var(--border);display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;color:var(--muted-foreground)">Nota media</span><span style="font:600 30px/1 var(--font-display);letter-spacing:-0.02em">8.8</span><span style="font-size:12px;color:var(--subtle-foreground)">15 títulos calificados</span></div>
+<div style="grid-column:1 / -1;padding:16px;border-radius:12px;background:var(--card);border:1px solid var(--border);display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;justify-content:space-between"><span style="font-size:12px;color:var(--muted-foreground)">Actividad · 2026</span><span style="font:500 12px var(--font-mono);color:var(--subtle-foreground)">títulos / mes</span></div>
+<div style="display:grid;grid-template-columns:repeat(12,1fr);gap:6px;align-items:end;height:64px">
+<sc-for list="{{ bars }}" as="b" hint-placeholder-count="12"><div style="height:{{ b.h }};border-radius:3px;background:{{ b.bg }}"></div></sc-for>
+</div>
+<div style="display:grid;grid-template-columns:repeat(12,1fr);gap:6px;font:500 10px var(--font-mono);color:var(--subtle-foreground);text-align:center"><span>E</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span><span>D</span></div>
+</div>
+</div>
+</div>
+
+<div style="border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:14px">
+<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">Navegación · sidebar y barra inferior</span>
+<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+<div style="width:200px;padding:10px;border-radius:12px;background:var(--sidebar);border:1px solid var(--sidebar-border);display:flex;flex-direction:column;gap:2px">
+<span style="display:flex;align-items:center;gap:10px;height:36px;padding:0 10px;border-radius:8px;background:var(--accent);font-size:13px;font-weight:550"><i class="icon-library-big" aria-hidden="true" style="font-size:16px;color:var(--brand)"></i>Biblioteca</span>
+<span style="display:flex;align-items:center;gap:10px;height:36px;padding:0 10px;font-size:13px;color:var(--muted-foreground)"><i class="icon-sparkles" aria-hidden="true" style="font-size:16px"></i>Para ti</span>
+<span style="display:flex;align-items:center;gap:10px;height:36px;padding:0 10px;font-size:13px;color:var(--muted-foreground)"><i class="icon-search" aria-hidden="true" style="font-size:16px"></i>Buscar</span>
+<span style="display:flex;align-items:center;gap:10px;height:36px;padding:0 10px;font-size:13px;color:var(--muted-foreground)"><i class="icon-chart-column" aria-hidden="true" style="font-size:16px"></i>Estadísticas</span>
+</div>
+<div style="flex:1;min-width:240px;padding:8px 6px;border-radius:14px;background:var(--sidebar);border:1px solid var(--sidebar-border);display:grid;grid-template-columns:repeat(4,1fr)">
+<span style="display:flex;flex-direction:column;align-items:center;gap:4px;min-height:48px;justify-content:center;font-size:11px;font-weight:600"><i class="icon-library-big" aria-hidden="true" style="font-size:20px;color:var(--brand)"></i>Biblioteca</span>
+<span style="display:flex;flex-direction:column;align-items:center;gap:4px;min-height:48px;justify-content:center;font-size:11px;color:var(--muted-foreground)"><i class="icon-sparkles" aria-hidden="true" style="font-size:20px"></i>Para ti</span>
+<span style="display:flex;flex-direction:column;align-items:center;gap:4px;min-height:48px;justify-content:center;font-size:11px;color:var(--muted-foreground)"><i class="icon-search" aria-hidden="true" style="font-size:20px"></i>Buscar</span>
+<span style="display:flex;flex-direction:column;align-items:center;gap:4px;min-height:48px;justify-content:center;font-size:11px;color:var(--muted-foreground)"><i class="icon-chart-column" aria-hidden="true" style="font-size:20px"></i>Stats</span>
+</div>
+</div>
+<span style="font-size:12px;color:var(--subtle-foreground)">Activo = fondo accent + icono en color de marca. Objetivos táctiles ≥ 48px en móvil.</span>
+</div>
+
+<div style="border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:14px;grid-column:1 / -1">
+<span style="font:500 12px var(--font-mono);color:var(--muted-foreground)">Estados · vacío · cargando · error</span>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px">
+<div style="padding:24px;border-radius:12px;border:1px dashed var(--border);display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px"><i class="icon-clapperboard" aria-hidden="true" style="font-size:22px;color:var(--muted-foreground)"></i><span style="font:600 16px var(--font-display)">Aún no hay nada aquí</span><span style="font-size:13px;color:var(--muted-foreground);text-wrap:pretty">Registra lo último que viste.</span><button type="button" style="height:34px;padding:0 12px;border-radius:9px;border:0;background:var(--primary);color:var(--primary-foreground);font-size:13px;font-weight:600">Registrar</button></div>
+<div aria-busy="true" style="padding:24px;border-radius:12px;border:1px solid var(--border);display:flex;flex-direction:column;gap:10px;animation:wlpulse 1.6s ease-in-out infinite"><div style="height:14px;width:60%;border-radius:4px;background:var(--muted)"></div><div style="height:10px;width:90%;border-radius:4px;background:var(--muted)"></div><div style="height:10px;width:75%;border-radius:4px;background:var(--muted)"></div><div style="height:34px;width:40%;border-radius:9px;background:var(--muted);margin-top:6px"></div></div>
+<div role="alert" style="padding:24px;border-radius:12px;border:1px solid color-mix(in oklch,var(--destructive) 45%,var(--border));display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px"><i class="icon-circle-alert" aria-hidden="true" style="font-size:22px;color:var(--destructive)"></i><span style="font:600 16px var(--font-display)">No se pudo cargar</span><span style="font-size:13px;color:var(--muted-foreground)">TMDB no responde. Inténtalo de nuevo.</span><button type="button" style="height:34px;padding:0 12px;border-radius:9px;border:1px solid var(--border);background:transparent;font-size:13px;font-weight:550;display:flex;align-items:center;gap:6px"><i class="icon-refresh-cw" aria-hidden="true" style="font-size:13px"></i>Reintentar</button></div>
+</div>
+</div>
+</div>
+</section>
+
+<footer style="display:flex;align-items:center;gap:16px;padding:20px 0 28px;border-top:1px solid var(--border);font-size:12px;color:var(--subtle-foreground);flex-wrap:wrap">
+<div aria-label="Logo de TMDB" style="width:76px;height:26px;border-radius:5px;border:1px dashed var(--input);display:flex;align-items:center;justify-content:center;font:500 10px var(--font-mono);background:repeating-linear-gradient(135deg,var(--muted) 0 4px,transparent 4px 8px)">logo TMDB</div>
+<span style="flex:1;min-width:240px">Este producto usa la API de TMDB, pero no está respaldado ni certificado por TMDB. Pie fijo en todas las pantallas.</span>
+<a href="Biblioteca.dc.html">Ver Biblioteca →</a>
+</footer>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const G=[
+ ['Superficies',[['background','oklch(0.16 0.008 285)','oklch(0.985 0.003 285)'],['card','oklch(0.195 0.009 285)','oklch(1 0 0)'],['popover','oklch(0.215 0.01 285)','oklch(1 0 0)'],['secondary','oklch(0.245 0.01 285)','oklch(0.955 0.005 285)'],['muted','oklch(0.225 0.009 285)','oklch(0.965 0.004 285)'],['border','oklch(0.29 0.01 285)','oklch(0.905 0.006 285)']]],
+ ['Texto',[['foreground','oklch(0.965 0.004 285)','oklch(0.2 0.01 285)'],['muted-foreground','oklch(0.74 0.012 285)','oklch(0.46 0.012 285)'],['subtle-foreground','oklch(0.64 0.012 285)','oklch(0.52 0.012 285)']]],
+ ['Acción y marca',[['primary','oklch(0.965 0.004 285)','oklch(0.2 0.01 285)'],['brand','oklch(0.76 0.14 40)','oklch(0.58 0.16 40)'],['ring','oklch(0.76 0.14 40)','oklch(0.58 0.16 40)'],['destructive','oklch(0.72 0.16 25)','oklch(0.54 0.19 25)']]],
+ ['Tipo de contenido',[['type-movie','oklch(0.82 0.12 80)','oklch(0.52 0.12 70)'],['type-series','oklch(0.80 0.11 225)','oklch(0.50 0.12 235)'],['type-anime','oklch(0.78 0.13 315)','oklch(0.50 0.15 315)']]],
+ ['Estado',[['status-watching','oklch(0.80 0.14 155)','oklch(0.50 0.13 155)'],['status-pending','oklch(0.74 0.012 285)','oklch(0.46 0.012 285)'],['status-dropped','oklch(0.72 0.16 25)','oklch(0.54 0.19 25)']]]
+];
+const TYPES=[{label:'Película',plural:'Películas',color:'var(--type-movie)',r:'1.5px',rot:'0deg'},{label:'Serie',plural:'Series',color:'var(--type-series)',r:'50%',rot:'0deg'},{label:'Anime',plural:'Anime',color:'var(--type-anime)',r:'1px',rot:'45deg'}];
+const WORDS=['','Terrible','Muy mala','Mala','Floja','Regular','Correcta','Buena','Muy buena','Excelente','Obra maestra'];
+const fmt=v=>v===10?'10':v.toFixed(1);
+const pb=h=>`linear-gradient(165deg, oklch(0.44 0.07 ${h}), oklch(0.24 0.045 ${h}))`;
+class Component extends DCLogic {
+  state={theme:'dark',rating:8.5,hover:null,ep:18,recAdded:false,recDismissed:false};
+  setRating(v){this.setState({rating:Math.min(10,Math.max(1,Math.round(v*2)/2))});}
+  renderVals(){
+    const s=this.state,v=s.hover??s.rating;
+    const pick=(e,i)=>{const r=e.currentTarget.getBoundingClientRect();return Math.max(1,i+(e.clientX-r.left<r.width/2?0.5:1));};
+    return {
+      themeClass:s.theme,themeIcon:s.theme==='dark'?'sun':'moon',themeLabel:s.theme==='dark'?'Modo claro':'Modo oscuro',toggleTheme:()=>this.setState({theme:s.theme==='dark'?'light':'dark'}),
+      themes:[{cls:'dark',name:'Oscuro · principal',i:1},{cls:'light',name:'Claro',i:2}].map(t=>({...t,groups:G.map(([name,toks])=>({name,tokens:toks.map(x=>({n:x[0],v:'--'+x[0],val:x[t.i]}))}))})),
+      typeScale:[
+        {name:'display',spec:'Bricolage 40/44 · 600',family:'var(--font-display)',size:'40px',weight:600,track:'-0.025em',sample:'Biblioteca',color:'var(--foreground)'},
+        {name:'h1',spec:'Bricolage 32/37 · 600',family:'var(--font-display)',size:'32px',weight:600,track:'-0.02em',sample:'Frieren: Beyond Journey’s End',color:'var(--foreground)'},
+        {name:'h2',spec:'Bricolage 22/28 · 600',family:'var(--font-display)',size:'22px',weight:600,track:'-0.01em',sample:'Porque calificaste Frieren con 9.5',color:'var(--foreground)'},
+        {name:'h3',spec:'Geist 17/23 · 600',family:'var(--font-sans)',size:'17px',weight:600,track:'0',sample:'Reparto y estudio',color:'var(--foreground)'},
+        {name:'body',spec:'Geist 14/21 · 400',family:'var(--font-sans)',size:'14px',weight:400,track:'0',sample:'Una maga elfa reflexiona sobre el paso del tiempo tras la muerte de sus compañeros.',color:'var(--foreground)'},
+        {name:'small',spec:'Geist 13/19 · 400',family:'var(--font-sans)',size:'13px',weight:400,track:'0',sample:'Fantasía · Aventura · 28 episodios',color:'var(--muted-foreground)'},
+        {name:'mono',spec:'Geist Mono 12 · 500',family:'var(--font-mono)',size:'12px',weight:500,track:'0',sample:'2023 · E18/28 · 9.5',color:'var(--muted-foreground)'}],
+      radii:[['xs','4px'],['sm','6px'],['md','8px'],['lg','10px'],['xl','14px'],['2xl','20px'],['full','999px']].map(([n,v])=>({n,v})),
+      spacing:[1,2,3,4,6,8,10,16].map(n=>({n,w:n*4+'px'})),
+      shadows:['shadow-sm','shadow-md','shadow-lg','shadow-poster'].map(v=>({v})),
+      typeBadges:TYPES,
+      statusBadges:[['Viendo','play','var(--status-watching)'],['Pendiente','clock','var(--status-pending)'],['Terminado','check','var(--status-completed)'],['En pausa','pause','var(--status-paused)'],['Abandonado','x','var(--status-dropped)']].map(([label,icon,color])=>({label,icon,color})),
+      cards:[{title:'Perfect Days',year:2023,bg:pb(140),rating:'9.0',chip:false,pct:false,...TYPES[0],type:'Película'},{title:'Severance',year:2022,bg:pb(225),rating:false,chip:'E12/19',pct:'63%',...TYPES[1],type:'Serie'}],
+      rating:s.rating,ratingShown:fmt(v),ratingWord:WORDS[Math.floor(v)],ratingAria:`${fmt(s.rating)} de 10, ${WORDS[Math.floor(s.rating)]}`,
+      ratingCells:Array.from({length:10},(_,i)=>{const f=Math.min(1,Math.max(0,v-i));return {n:i+1,fill:f*100+'%',numColor:f>=1?'var(--brand-foreground)':'var(--subtle-foreground)',
+        onMove:e=>{const p=pick(e,i);if(p!==s.hover)this.setState({hover:p});},onClick:e=>this.setState({rating:pick(e,i),hover:null})};}),
+      onRatingLeave:()=>this.setState({hover:null}),
+      onRatingKey:e=>{const k=e.key;let n=null;if(k==='ArrowRight'||k==='ArrowUp')n=s.rating+0.5;else if(k==='ArrowLeft'||k==='ArrowDown')n=s.rating-0.5;else if(k==='Home')n=1;else if(k==='End'||k==='0')n=10;else if(/^[1-9]$/.test(k))n=+k;if(n!=null){e.preventDefault();this.setRating(n);}},
+      ep:s.ep,epPct:Math.round(s.ep/28*100)+'%',epLeft:s.ep>=28?'Temporada terminada':`Faltan ${28-s.ep} · ~${Math.round((28-s.ep)*32/60)} h`,
+      epCells:Array.from({length:28},(_,i)=>({bg:i<s.ep?'var(--status-watching)':'var(--secondary)'})),
+      epUp:()=>this.setState({ep:Math.min(28,s.ep+1)}),epDown:()=>this.setState({ep:Math.max(0,s.ep-1)}),
+      results:[{title:'Mononoke',year:2007,poster:pb(20),...TYPES[2],type:'Anime',bg:'var(--accent)'},{title:'La princesa Mononoke',year:1997,poster:pb(120),...TYPES[2],type:'Anime',bg:'transparent'},{title:'Mono',year:2019,poster:pb(70),...TYPES[0],type:'Película',bg:'transparent'}],
+      recVisible:!s.recDismissed,recHidden:s.recDismissed,
+      recAdd:()=>this.setState({recAdded:!s.recAdded}),recDismiss:()=>this.setState({recDismissed:true}),recUndo:()=>this.setState({recDismissed:false}),
+      recAddLabel:s.recAdded?'En pendientes':'Añadir',recAddIcon:s.recAdded?'check':'plus',recAddBg:s.recAdded?'var(--secondary)':'var(--primary)',recAddFg:s.recAdded?'var(--foreground)':'var(--primary-foreground)',
+      bars:[3,5,2,6,4,7,9,5,6,8,0,0].map((n,i)=>({h:Math.max(4,n/9*64)+'px',bg:i===9?'var(--brand)':(n?'var(--secondary)':'var(--muted)')}))
+    };
+  }
+}
+</script>
+</body>
+</html>
