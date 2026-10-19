@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&amp;family=Geist:wght@400..700&amp;family=Geist+Mono:wght@400..600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@0.460.0/font/lucide.css">
+<link rel="stylesheet" href="./tokens.css">
+<style>
+body{margin:0;background:#1b1b1f;-webkit-font-smoothing:antialiased}
+a{color:var(--foreground);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--brand)}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+input[type=search]::-webkit-search-cancel-button{display:none}
+</style>
+</helmet>
+<div style="display:flex;gap:72px;padding:72px;align-items:flex-start;flex-wrap:wrap;font-family:'Geist',sans-serif">
+
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:10px;align-items:center;color:#a9a9b2;font:500 13px 'Geist Mono',monospace"><span style="background:#2c2c33;color:#eee;padding:3px 8px;border-radius:6px">3a</span>Buscar / añadir · Escritorio 1440 · escribe en el buscador</div>
+<div class="{{ themeClass }}" style="width:1440px;min-height:960px;background:var(--background);color:var(--foreground);font-family:var(--font-sans);display:flex;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 40px 100px -30px rgb(0 0 0/.6)">
+
+<aside style="width:240px;flex-shrink:0;background:var(--sidebar);border-right:1px solid var(--sidebar-border);padding:22px 14px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;align-items:center;gap:10px;padding:0 10px"><div style="width:22px;height:22px;border-radius:7px;background:var(--brand);display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:50%;background:var(--sidebar)"></div></div><span style="font:650 19px/1 var(--font-display);letter-spacing:-0.02em">Watchlog</span></div>
+<nav aria-label="Principal" style="display:flex;flex-direction:column;gap:2px">
+<a href="Biblioteca.dc.html" style="display:flex;align-items:center;gap:12px;height:38px;padding:0 10px;border-radius:8px;color:var(--muted-foreground);text-decoration:none;font-size:14px" style-hover="background:var(--accent);color:var(--foreground)"><i class="icon-library-big" aria-hidden="true" style="font-size:17px"></i>Biblioteca</a>
+<a href="Para%20ti.dc.html" style="display:flex;align-items:center;gap:12px;height:38px;padding:0 10px;border-radius:8px;color:var(--muted-foreground);text-decoration:none;font-size:14px" style-hover="background:var(--accent);color:var(--foreground)"><i class="icon-sparkles" aria-hidden="true" style="font-size:17px"></i>Para ti</a>
+<a href="Buscar.dc.html" aria-current="page" style="display:flex;align-items:center;gap:12px;height:38px;padding:0 10px;border-radius:8px;background:var(--accent);color:var(--foreground);text-decoration:none;font-size:14px;font-weight:550"><i class="icon-search" aria-hidden="true" style="font-size:17px;color:var(--brand)"></i>Buscar</a>
+<a href="Estad%C3%ADsticas.dc.html" style="display:flex;align-items:center;gap:12px;height:38px;padding:0 10px;border-radius:8px;color:var(--muted-foreground);text-decoration:none;font-size:14px" style-hover="background:var(--accent);color:var(--foreground)"><i class="icon-chart-column" aria-hidden="true" style="font-size:17px"></i>Estadísticas</a>
+</nav>
+<a href="Perfil.dc.html" style="margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:1px solid var(--sidebar-border);text-decoration:none;color:var(--foreground)" style-hover="background:var(--accent)"><div style="width:30px;height:30px;border-radius:50%;background:var(--secondary);display:flex;align-items:center;justify-content:center;font:600 12px var(--font-sans)">DG</div><div style="display:flex;flex-direction:column;gap:1px;flex:1"><span style="font-size:13px;font-weight:550">Diego</span><span style="font-size:12px;color:var(--subtle-foreground)">Ver perfil</span></div></a>
+</aside>
+
+<main style="flex:1;min-width:0;display:flex;flex-direction:column">
+<div style="max-width:860px;width:100%;margin:0 auto;padding:48px 40px 40px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px;flex:1">
+<div style="display:flex;align-items:center;justify-content:space-between"><h1 style="margin:0;font:600 34px/1.1 var(--font-display);letter-spacing:-0.025em">Buscar</h1>
+<button type="button" onClick="{{ toggleTheme }}" aria-label="Cambiar tema" style="width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted-foreground)"><i class="icon-{{ themeIcon }}" aria-hidden="true" style="font-size:17px"></i></button></div>
+<label style="display:flex;align-items:center;gap:12px;height:56px;padding:0 10px 0 18px;border-radius:14px;background:var(--card);border:1px solid var(--ring);outline:3px solid color-mix(in oklch,var(--ring) 22%,transparent);box-shadow:var(--shadow-md)">
+<i class="icon-search" aria-hidden="true" style="font-size:20px;color:var(--muted-foreground)"></i>
+<input type="search" value="{{ q }}" onChange="{{ onQ }}" placeholder="Película, serie o anime…" aria-label="Buscar títulos" style="flex:1;border:0;background:transparent;outline:none;font-size:18px;color:var(--foreground)">
+<sc-if value="{{ hasQ }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ clearQ }}" aria-label="Borrar" style="width:34px;height:34px;border-radius:8px;border:0;background:var(--secondary);cursor:pointer;display:flex;align-items:center;justify-content:center"><i class="icon-x" aria-hidden="true" style="font-size:15px"></i></button></sc-if>
+</label>
+<div role="tablist" aria-label="Tipo" style="display:flex;gap:6px">
+<sc-for list="{{ tabs }}" as="o" hint-placeholder-count="4">
+<button type="button" role="tab" aria-selected="{{ o.pressed }}" onClick="{{ o.onClick }}" style="height:32px;padding:0 12px;border-radius:999px;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.fg }};font-size:13px;font-weight:550;cursor:pointer;display:flex;align-items:center;gap:7px">
+<sc-if value="{{ o.hasShape }}" hint-placeholder-val="{{ false }}"><span style="width:7px;height:7px;background:{{ o.color }};border-radius:{{ o.r }};transform:rotate({{ o.rot }})"></span></sc-if>{{ o.label }}<span style="font:500 11px var(--font-mono);opacity:.7">{{ o.count }}</span></button>
+</sc-for>
+</div>
+
+<sc-if value="{{ hasQ }}" hint-placeholder-val="{{ true }}">
+<div role="listbox" aria-label="Resultados" style="display:flex;flex-direction:column;border:1px solid var(--border);border-radius:14px;background:var(--card);overflow:hidden">
+<sc-for list="{{ results }}" as="r" hint-placeholder-count="6">
+<div role="option" aria-selected="{{ r.sel }}" style="display:flex;align-items:center;gap:16px;padding:12px 14px;border-bottom:1px solid var(--border);background:{{ r.rowBg }}">
+<div style="width:44px;flex-shrink:0;aspect-ratio:2/3;border-radius:5px;background:{{ r.poster }};box-shadow:var(--shadow-sm)"></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="font-size:15px;font-weight:550">{{ r.title }}</span>
+<span style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted-foreground)"><span style="width:7px;height:7px;background:{{ r.color }};border-radius:{{ r.r }};transform:rotate({{ r.rot }})"></span><span style="color:{{ r.color }};font-weight:600">{{ r.type }}</span>· {{ r.year }} · {{ r.extra }}</span>
+</div>
+<sc-if value="{{ r.inLib }}" hint-placeholder-val="{{ false }}"><span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:550;color:{{ r.stColor }}"><i class="icon-{{ r.stIcon }}" aria-hidden="true" style="font-size:12px"></i>{{ r.status }}</span></sc-if>
+<sc-if value="{{ r.notInLib }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;gap:6px">
+<button type="button" onClick="{{ r.onPending }}" style="height:34px;padding:0 12px;border-radius:9px;border:1px solid var(--border);background:transparent;font-size:13px;font-weight:550;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--muted-foreground)" style-hover="color:var(--foreground);background:var(--accent)"><i class="icon-clock" aria-hidden="true" style="font-size:13px"></i>Pendiente</button>
+<button type="button" onClick="{{ r.onWatched }}" style="height:34px;padding:0 12px;border-radius:9px;border:0;background:var(--primary);color:var(--primary-foreground);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px"><i class="icon-check" aria-hidden="true" style="font-size:13px"></i>Visto</button>
+</div>
+</sc-if>
+</div>
+</sc-for>
+<sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center"><i class="icon-search-x" aria-hidden="true" style="font-size:22px;color:var(--muted-foreground)"></i><span style="font:600 16px var(--font-display)">Sin resultados para “{{ q }}”</span><span style="font-size:13px;color:var(--muted-foreground)">Prueba con el título original o en inglés.</span></div>
+</sc-if>
+</div>
+<div style="display:flex;gap:18px;font-size:12px;color:var(--subtle-foreground)"><span style="display:flex;gap:6px;align-items:center"><kbd style="font:500 11px var(--font-mono);border:1px solid var(--border);border-radius:5px;padding:2px 6px">↑↓</kbd>moverse</span><span style="display:flex;gap:6px;align-items:center"><kbd style="font:500 11px var(--font-mono);border:1px solid var(--border);border-radius:5px;padding:2px 6px">↵</kbd>marcar visto</span><span style="display:flex;gap:6px;align-items:center"><kbd style="font:500 11px var(--font-mono);border:1px solid var(--border);border-radius:5px;padding:2px 6px">P</kbd>pendiente</span><span style="display:flex;gap:6px;align-items:center"><kbd style="font:500 11px var(--font-mono);border:1px solid var(--border);border-radius:5px;padding:2px 6px">⇧↵</kbd>abrir ficha</span></div>
+</sc-if>
+
+<sc-if value="{{ noQ }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:12px">
+<span style="font:500 11px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--subtle-foreground)">Búsquedas recientes</span>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ recents }}" as="r" hint-placeholder-count="4"><button type="button" onClick="{{ r.onClick }}" style="height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--border);background:transparent;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:7px;color:var(--muted-foreground)" style-hover="color:var(--foreground)"><i class="icon-history" aria-hidden="true" style="font-size:13px"></i>{{ r.v }}</button></sc-for></div>
+</div>
+</sc-if>
+</div>
+
+<footer style="display:flex;align-items:center;gap:16px;padding:18px 40px;border-top:1px solid var(--border);font-size:12px;color:var(--subtle-foreground)">
+<div aria-label="Logo de TMDB" style="width:76px;height:26px;flex-shrink:0;border-radius:5px;border:1px dashed var(--input);display:flex;align-items:center;justify-content:center;font:500 10px var(--font-mono);background:repeating-linear-gradient(135deg,var(--muted) 0 4px,transparent 4px 8px)">logo TMDB</div>
+<span style="flex:1">Resultados de búsqueda de TMDB. Este producto usa la API de TMDB, pero no está respaldado ni certificado por TMDB.</span>
+</footer>
+</main>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+<div role="status" aria-live="polite" style="position:absolute;left:50%;bottom:84px;transform:translateX(-30%);display:flex;align-items:center;gap:14px;padding:10px 10px 10px 12px;border-radius:12px;background:var(--popover);border:1px solid var(--border);box-shadow:var(--shadow-lg)">
+<div style="width:28px;aspect-ratio:2/3;border-radius:4px;background:{{ toast.poster }}"></div>
+<div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:13px;font-weight:600">{{ toast.title }}</span><span style="font-size:12px;color:var(--muted-foreground)">Añadido como {{ toast.status }}</span></div>
+<a href="Calificar.dc.html" style="height:32px;padding:0 12px;border-radius:8px;background:var(--brand);color:var(--brand-foreground);text-decoration:none;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px"><i class="icon-star" aria-hidden="true" style="font-size:13px"></i>Calificar</a>
+<button type="button" onClick="{{ undo }}" style="height:32px;padding:0 10px;border-radius:8px;border:0;background:transparent;font-size:13px;font-weight:550;cursor:pointer;color:var(--muted-foreground)">Deshacer</button>
+</div>
+</sc-if>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:10px;align-items:center;color:#a9a9b2;font:500 13px 'Geist Mono',monospace"><span style="background:#2c2c33;color:#eee;padding:3px 8px;border-radius:6px">3b</span>Buscar · Móvil 390</div>
+<div class="{{ themeClass }}" style="width:390px;height:844px;background:var(--background);color:var(--foreground);font-family:var(--font-sans);border-radius:44px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 10px #0c0c0e,0 40px 100px -30px rgb(0 0 0/.7)">
+<div style="height:50px;flex-shrink:0"></div>
+<div style="padding:4px 16px 12px;display:flex;gap:10px;align-items:center">
+<label style="flex:1;display:flex;align-items:center;gap:10px;height:48px;padding:0 6px 0 14px;border-radius:12px;background:var(--muted);border:1px solid var(--ring)">
+<i class="icon-search" aria-hidden="true" style="font-size:18px;color:var(--muted-foreground)"></i>
+<input type="search" value="{{ q }}" onChange="{{ onQ }}" placeholder="Buscar…" aria-label="Buscar títulos" style="flex:1;min-width:0;border:0;background:transparent;outline:none;font-size:16px;color:var(--foreground)">
+</label>
+<button type="button" onClick="{{ clearQ }}" style="height:44px;border:0;background:transparent;font-size:15px;font-weight:550;color:var(--muted-foreground)">Cancelar</button>
+</div>
+<div style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:0 16px 10px">
+<sc-for list="{{ tabs }}" as="o" hint-placeholder-count="4"><button type="button" onClick="{{ o.onClick }}" style="flex-shrink:0;height:36px;padding:0 14px;border-radius:999px;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.fg }};font-size:13px;font-weight:550;display:flex;align-items:center;gap:6px"><sc-if value="{{ o.hasShape }}" hint-placeholder-val="{{ false }}"><span style="width:6px;height:6px;background:{{ o.color }};border-radius:{{ o.r }};transform:rotate({{ o.rot }})"></span></sc-if>{{ o.label }}</button></sc-for>
+</div>
+<div style="flex:1;overflow-y:auto;scrollbar-width:none;padding:0 16px 40px">
+<sc-for list="{{ results }}" as="r" hint-placeholder-count="6">
+<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+<div style="width:44px;flex-shrink:0;aspect-ratio:2/3;border-radius:5px;background:{{ r.poster }}"></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font-size:14px;font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</span><span style="font-size:12px;color:var(--muted-foreground)"><span style="color:{{ r.color }};font-weight:600">{{ r.type }}</span> · {{ r.year }}</span></div>
+<sc-if value="{{ r.notInLib }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ r.onWatched }}" aria-label="Marcar {{ r.title }} como visto" style="width:44px;height:44px;border-radius:12px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center"><i class="icon-check" aria-hidden="true" style="font-size:18px"></i></button></sc-if>
+<sc-if value="{{ r.inLib }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:550;color:{{ r.stColor }}">{{ r.status }}</span></sc-if>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position:absolute;left:12px;right:12px;bottom:28px;display:flex;align-items:center;gap:10px;padding:10px;border-radius:14px;background:var(--popover);border:1px solid var(--border);box-shadow:var(--shadow-lg)">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;padding-left:4px"><span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ toast.title }}</span><span style="font-size:12px;color:var(--muted-foreground)">Añadido como {{ toast.status }}</span></div>
+<a href="Calificar.dc.html" style="height:40px;padding:0 14px;border-radius:10px;background:var(--brand);color:var(--brand-foreground);text-decoration:none;font-size:13px;font-weight:600;display:flex;align-items:center">Calificar</a>
+<button type="button" onClick="{{ undo }}" aria-label="Deshacer" style="width:40px;height:40px;border-radius:10px;border:0;background:var(--secondary);display:flex;align-items:center;justify-content:center"><i class="icon-undo-2" aria-hidden="true" style="font-size:16px"></i></button>
+</div>
+</sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const pb=h=>`linear-gradient(165deg, oklch(0.44 0.07 ${h}), oklch(0.24 0.045 ${h}))`;
+const TY={movie:['Película','var(--type-movie)','1.5px','0deg'],series:['Serie','var(--type-series)','50%','0deg'],anime:['Anime','var(--type-anime)','1px','45deg']};
+const DB=[
+['Frieren: Beyond Journey’s End','anime',2023,'28 ep · Madhouse',165,'Terminado'],
+['Fruits Basket','anime',2019,'63 ep · TMS',330,null],
+['Friends','series',1994,'10 temporadas',45,null],
+['Frances Ha','movie',2012,'1 h 26 min · Baumbach',210,null],
+['Frankenstein','movie',2025,'2 h 29 min · del Toro',15,null],
+['Fringe','series',2008,'5 temporadas',200,null],
+['Fire Force','anime',2019,'48 ep · David Production',25,null],
+['Mononoke','anime',2007,'12 ep · Toei',20,null],
+['La princesa Mononoke','anime',1997,'2 h 14 min · Ghibli',120,null],
+['Mr. Robot','series',2015,'4 temporadas',0,null],
+['Monster','anime',2004,'74 ep · Madhouse',280,'Pendiente'],
+['Moonlight','movie',2016,'1 h 51 min · Jenkins',230,null]];
+const SC={'Terminado':['check','var(--status-completed)'],'Pendiente':['clock','var(--status-pending)']};
+class Component extends DCLogic {
+  state={theme:'dark',q:'fr',tab:'all',added:{},toast:null};
+  add(i,status){const d=DB[i];this.setState({added:{...this.state.added,[i]:status},toast:{i,title:d[0],status,poster:pb(d[4])}});}
+  renderVals(){
+    const s=this.state,q=s.q.trim().toLowerCase();
+    const match=q?DB.map((d,i)=>({d,i})).filter(({d})=>d[0].toLowerCase().includes(q)):[];
+    const shown=match.filter(({d})=>s.tab==='all'||d[1]===s.tab);
+    const tabs=[['all','Todo'],['movie','Películas'],['series','Series'],['anime','Anime']].map(([k,label])=>{const a=s.tab===k,t=TY[k];
+      return {label,hasShape:!!t,color:t?.[1],r:t?.[2],rot:t?.[3],count:k==='all'?match.length:match.filter(m=>m.d[1]===k).length,pressed:a?'true':'false',
+      bg:a?'var(--foreground)':'transparent',fg:a?'var(--background)':'var(--muted-foreground)',border:a?'var(--foreground)':'var(--border)',onClick:()=>this.setState({tab:k})};});
+    return {
+      themeClass:s.theme,themeIcon:s.theme==='dark'?'sun':'moon',toggleTheme:()=>this.setState({theme:s.theme==='dark'?'light':'dark'}),
+      q:s.q,hasQ:!!q,noQ:!q,onQ:e=>this.setState({q:e.target.value}),clearQ:()=>this.setState({q:''}),tabs,noResults:!!q&&shown.length===0,
+      results:shown.map(({d,i},n)=>{const st=s.added[i]||d[5],t=TY[d[1]];return {title:d[0],year:d[2],extra:d[3],poster:pb(d[4]),type:t[0],color:t[1],r:t[2],rot:t[3],
+        inLib:!!st,notInLib:!st,status:st,stIcon:st?SC[st][0]:'',stColor:st?SC[st][1]:'',sel:n===0?'true':'false',rowBg:n===0&&!st?'var(--accent)':'transparent',
+        onWatched:()=>this.add(i,'Terminado'),onPending:()=>this.add(i,'Pendiente')};}),
+      recents:['frieren','perfect days','severance','dandadan'].map(v=>({v,onClick:()=>this.setState({q:v})})),
+      toast:s.toast,undo:()=>{const a={...s.added};delete a[s.toast.i];this.setState({added:a,toast:null});}
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&amp;family=Geist:wght@400..700&amp;family=Geist+Mono:wght@400..600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/lucide-static@0.460.0/font/lucide.css">
+<link rel="stylesheet" href="./tokens.css">
+<style>
+body{margin:0;background:#1b1b1f;-webkit-font-smoothing:antialiased}
+a{color:var(--foreground);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--brand)}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+select option{background:var(--popover);color:var(--popover-foreground)}
+@keyframes wlpulse{0%,100%{opacity:1}50%{opacity:.45}}
+</style>
+</helmet>
+<div style="display:flex;gap:72px;padding:72px;align-items:flex-start;flex-wrap:wrap;font-family:'Geist',sans-serif">
+
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:10px;align-items:center;color:#a9a9b2;font:500 13px 'Geist Mono',monospace"><span style="background:#2c2c33;color:#eee;padding:3px 8px;border-radius:6px">1a</span>Biblioteca · Escritorio 1440</div>
+
+<div class="{{ themeClass }}" style="width:1440px;min-height:1024px;background:var(--background);color:var(--foreground);font-family:var(--font-sans);display:flex;border-radius:14px;overflow:hidden;box-shadow:0 40px 100px -30px rgb(0 0 0/.6)">
+
+<aside style="width:240px;flex-shrink:0;background:var(--sidebar);border-right:1px solid var(--sidebar-border);padding:22px 14px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;align-items:center;gap:10px;padding:0 10px">
+<div style="width:22px;height:22px;border-radius:7px;background:var(--brand);display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:50%;background:var(--sidebar)"></div></div>
+<span style="font:650 19px/1 var(--font-display);letter-spacing:-0.02em">Watchlog</span>
+</div>
+<nav aria-label="Principal" style="display:flex;flex-direction:column;gap:2px">
+<a href="#" aria-current="page" style="display:flex;align-items:center;gap:12px;height:38px;padding:0 10px;border-radius:8px;background:var(--accent);color:var(--foreground);text-decoration:none;font-size:14px;font-weight:550"><i class="icon-library-big" aria-hidden="true" style="font-size:17px;color:var(--brand)"></i>Biblioteca</a>
+<a href="#" style="display:flex;align-items:center;gap:12px;height:38px;padding:0 10px;border-radius:8px;color:var(--muted-foreground);text-decoration:none;font-size:14px" style-hover="background:var(--accent);color:var(--foreground)"><i class="icon-sparkles" aria-hidden="true" style="font-size:17px"></i>Para ti</a>
+<a href="#" style="display:flex;align-items:center;gap:12px;height:38px;padding:0 10px;border-radius:8px;color:var(--muted-foreground);text-decoration:none;font-size:14px" style-hover="background:var(--accent);color:var(--foreground)"><i class="icon-search" aria-hidden="true" style="font-size:17px"></i>Buscar</a>
+<a href="#" style="display:flex;align-items:center;gap:12px;height:38px;padding:0 10px;border-radius:8px;color:var(--muted-foreground);text-decoration:none;font-size:14px" style-hover="background:var(--accent);color:var(--foreground)"><i class="icon-chart-column" aria-hidden="true" style="font-size:17px"></i>Estadísticas</a>
+</nav>
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="padding:0 10px 8px;font:500 11px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--subtle-foreground)">Colección</div>
+<sc-for list="{{ typeNav }}" as="t" hint-placeholder-count="3">
+<button type="button" onClick="{{ t.onClick }}" style="display:flex;align-items:center;gap:12px;height:36px;padding:0 10px;border-radius:8px;border:0;background:transparent;color:var(--muted-foreground);font-size:14px;cursor:pointer;text-align:left" style-hover="background:var(--accent);color:var(--foreground)">
+<span style="width:17px;display:flex;justify-content:center"><span style="width:8px;height:8px;background:{{ t.color }};border-radius:{{ t.r }};transform:rotate({{ t.rot }})"></span></span>
+<span style="flex:1">{{ t.label }}</span>
+<span style="font:500 12px var(--font-mono);color:var(--subtle-foreground)">{{ t.count }}</span>
+</button>
+</sc-for>
+</div>
+<div style="margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:1px solid var(--sidebar-border)">
+<div style="width:30px;height:30px;border-radius:50%;background:var(--secondary);display:flex;align-items:center;justify-content:center;font:600 12px var(--font-sans)">DG</div>
+<div style="display:flex;flex-direction:column;gap:1px;flex:1;min-width:0"><span style="font-size:13px;font-weight:550">Diego</span><span style="font-size:12px;color:var(--subtle-foreground)">3 amigos</span></div>
+<i class="icon-settings" aria-hidden="true" style="font-size:16px;color:var(--subtle-foreground)"></i>
+</div>
+</aside>
+
+<main style="flex:1;min-width:0;display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:12px;padding:18px 40px;border-bottom:1px solid var(--border)">
+<label style="flex:1;max-width:520px;display:flex;align-items:center;gap:10px;height:40px;padding:0 8px 0 14px;border-radius:10px;background:var(--muted);border:1px solid var(--border)">
+<i class="icon-search" aria-hidden="true" style="font-size:16px;color:var(--subtle-foreground)"></i>
+<input type="search" placeholder="Busca películas, series o anime…" aria-label="Buscar títulos" style="flex:1;border:0;background:transparent;outline:none;font-size:14px;color:var(--foreground)">
+<kbd style="font:500 11px var(--font-mono);color:var(--muted-foreground);border:1px solid var(--border);border-radius:5px;padding:3px 6px">⌘K</kbd>
+</label>
+<div style="flex:1"></div>
+<button type="button" onClick="{{ toggleTheme }}" aria-label="Cambiar tema" style="width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted-foreground)" style-hover="background:var(--accent);color:var(--foreground)"><i class="icon-{{ themeIcon }}" aria-hidden="true" style="font-size:17px"></i></button>
+<button type="button" style="height:40px;padding:0 16px 0 12px;border-radius:10px;border:0;background:var(--primary);color:var(--primary-foreground);font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;cursor:pointer" style-hover="opacity:.9"><i class="icon-plus" aria-hidden="true" style="font-size:17px"></i>Registrar</button>
+</header>
+
+<div style="padding:36px 40px 0;display:flex;flex-direction:column;gap:22px">
+<div style="display:flex;align-items:flex-end;gap:16px">
+<div style="display:flex;flex-direction:column;gap:6px;flex:1">
+<h1 style="margin:0;font:600 34px/1.1 var(--font-display);letter-spacing:-0.025em">Biblioteca</h1>
+<p style="margin:0;font-size:14px;color:var(--muted-foreground)">{{ summary }}</p>
+</div>
+<div role="group" aria-label="Vista" style="display:flex;padding:3px;border-radius:10px;background:var(--muted);border:1px solid var(--border)">
+<sc-for list="{{ viewOpts }}" as="v" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{ v.pressed }}" onClick="{{ v.onClick }}" style="height:30px;padding:0 12px;border-radius:7px;border:0;cursor:pointer;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:550;background:{{ v.bg }};color:{{ v.fg }};box-shadow:{{ v.shadow }}"><i class="icon-{{ v.icon }}" aria-hidden="true" style="font-size:15px"></i>{{ v.label }}</button>
+</sc-for>
+</div>
+<div style="position:relative;display:flex;align-items:center">
+<i class="icon-arrow-down-up" aria-hidden="true" style="position:absolute;left:12px;font-size:14px;color:var(--subtle-foreground);pointer-events:none"></i>
+<select aria-label="Ordenar" value="{{ sort }}" onChange="{{ onSort }}" style="appearance:none;height:38px;padding:0 34px 0 34px;border-radius:10px;border:1px solid var(--border);background:var(--background);font-size:13px;font-weight:500;cursor:pointer">
+<option value="recent">Añadidos recientemente</option><option value="rating">Mi nota</option><option value="title">Título A–Z</option><option value="year">Año de estreno</option>
+</select>
+<i class="icon-chevron-down" aria-hidden="true" style="position:absolute;right:12px;font-size:14px;color:var(--subtle-foreground);pointer-events:none"></i>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:14px;padding-bottom:22px;border-bottom:1px solid var(--border)">
+<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+<div role="group" aria-label="Tipo" style="display:flex;padding:3px;border-radius:10px;background:var(--muted);border:1px solid var(--border)">
+<sc-for list="{{ typeOpts }}" as="o" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{ o.pressed }}" onClick="{{ o.onClick }}" style="height:30px;padding:0 12px;border-radius:7px;border:0;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:550;background:{{ o.bg }};color:{{ o.fg }};box-shadow:{{ o.shadow }}">
+<sc-if value="{{ o.hasShape }}" hint-placeholder-val="{{ false }}"><span style="width:7px;height:7px;background:{{ o.color }};border-radius:{{ o.r }};transform:rotate({{ o.rot }})"></span></sc-if>
+{{ o.label }}<span style="font:500 11px var(--font-mono);opacity:.7">{{ o.count }}</span></button>
+</sc-for>
+</div>
+<div style="width:1px;height:24px;background:var(--border);margin:0 4px"></div>
+<sc-for list="{{ selects }}" as="f" hint-placeholder-count="3">
+<div style="position:relative;display:flex;align-items:center">
+<select aria-label="{{ f.label }}" value="{{ f.value }}" onChange="{{ f.onChange }}" style="appearance:none;height:36px;padding:0 32px 0 12px;border-radius:999px;border:1px solid {{ f.border }};background:{{ f.bg }};color:{{ f.fg }};font-size:13px;font-weight:500;cursor:pointer">
+<sc-for list="{{ f.options }}" as="op"><option value="{{ op.v }}">{{ op.l }}</option></sc-for>
+</select>
+<i class="icon-chevron-down" aria-hidden="true" style="position:absolute;right:11px;font-size:13px;color:var(--subtle-foreground);pointer-events:none"></i>
+</div>
+</sc-for>
+<div style="flex:1"></div>
+<sc-if value="{{ showClear }}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{ clearAll }}" style="height:34px;padding:0 10px;border:0;background:transparent;color:var(--muted-foreground);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;border-radius:8px" style-hover="color:var(--foreground);background:var(--accent)"><i class="icon-x" aria-hidden="true" style="font-size:14px"></i>Limpiar filtros</button>
+</sc-if>
+</div>
+<div role="group" aria-label="Estado" style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ statusChips }}" as="c" hint-placeholder-count="6">
+<button type="button" aria-pressed="{{ c.pressed }}" onClick="{{ c.onClick }}" style="height:32px;padding:0 12px;border-radius:999px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }};font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:7px">
+<sc-if value="{{ c.icon }}" hint-placeholder-val="{{ false }}"><i class="icon-{{ c.icon }}" aria-hidden="true" style="font-size:13px;color:{{ c.iconColor }}"></i></sc-if>
+{{ c.label }}<span style="font:500 11px var(--font-mono);opacity:.7">{{ c.count }}</span></button>
+</sc-for>
+</div>
+</div>
+</div>
+
+<section aria-label="Títulos" style="flex:1;padding:28px 40px 48px">
+<sc-if value="{{ showGrid }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:{{ gridCols }};gap:32px 20px">
+<sc-for list="{{ items }}" as="it" hint-placeholder-count="12">
+<button type="button" aria-label="{{ it.aria }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;gap:10px;min-width:0;border-radius:8px">
+<div style="position:relative;aspect-ratio:2/3;border-radius:8px;overflow:hidden;background:{{ it.posterBg }};box-shadow:var(--shadow-poster);transition:transform .2s" style-hover="transform:translateY(-3px)">
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgb(255 255 255/.035) 0 1px,transparent 1px 9px)"></div>
+<div style="position:absolute;left:10px;right:10px;bottom:12px;font:500 10px/1.3 var(--font-mono);color:rgb(255 255 255/.55);text-transform:uppercase;letter-spacing:.06em">póster<br>{{ it.title }}</div>
+<sc-if value="{{ it.showStatusChip }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;top:8px;left:8px;height:22px;padding:0 8px;border-radius:6px;background:rgb(12 12 16/.72);backdrop-filter:blur(6px);color:#f4f4f6;font-size:11px;font-weight:550;display:flex;align-items:center;gap:5px"><i class="icon-{{ it.statusIcon }}" aria-hidden="true" style="font-size:11px"></i>{{ it.statusChipText }}</div>
+</sc-if>
+<sc-if value="{{ it.rated }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;top:8px;right:8px;height:22px;padding:0 7px;border-radius:6px;background:rgb(12 12 16/.72);backdrop-filter:blur(6px);color:#f4f4f6;font:600 11px var(--font-mono);display:flex;align-items:center;gap:4px"><span style="color:oklch(0.8 0.13 45)">★</span>{{ it.ratingText }}</div>
+</sc-if>
+<sc-if value="{{ it.showProgress }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:0;right:0;bottom:0;height:3px;background:rgb(255 255 255/.18)"><div style="height:100%;width:{{ it.pct }};background:oklch(0.82 0.14 155)"></div></div>
+</sc-if>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px;padding:0 2px">
+<span style="font-size:14px;font-weight:550;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.title }}</span>
+<span style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted-foreground)"><span style="width:7px;height:7px;flex-shrink:0;background:{{ it.typeColor }};border-radius:{{ it.typeR }};transform:rotate({{ it.typeRot }})"></span><span style="color:{{ it.typeColor }};font-weight:550">{{ it.typeLabel }}</span><span aria-hidden="true">·</span>{{ it.year }}</span>
+</div>
+</button>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ showList }}" hint-placeholder-val="{{ false }}">
+<div role="table" aria-label="Títulos" style="display:flex;flex-direction:column">
+<div role="row" style="display:grid;grid-template-columns:52px minmax(0,2.2fr) 120px 64px 150px 170px 64px;gap:20px;align-items:center;padding:0 12px 10px;font:500 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--subtle-foreground);border-bottom:1px solid var(--border)">
+<span></span><span>Título</span><span>Tipo</span><span>Año</span><span>Estado</span><span>Progreso</span><span style="text-align:right">Mi nota</span>
+</div>
+<sc-for list="{{ items }}" as="it" hint-placeholder-count="8">
+<div role="row" tabindex="0" style="display:grid;grid-template-columns:52px minmax(0,2.2fr) 120px 64px 150px 170px 64px;gap:20px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--border);cursor:pointer;border-radius:8px" style-hover="background:var(--muted)">
+<div style="width:52px;aspect-ratio:2/3;border-radius:5px;background:{{ it.posterBg }};box-shadow:var(--shadow-sm)"></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:14px;font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.title }}</span><span style="font-size:12px;color:var(--muted-foreground)">{{ it.genresText }}</span></div>
+<span style="display:flex;align-items:center;gap:7px;font-size:13px;font-weight:550;color:{{ it.typeColor }}"><span style="width:7px;height:7px;background:{{ it.typeColor }};border-radius:{{ it.typeR }};transform:rotate({{ it.typeRot }})"></span>{{ it.typeLabel }}</span>
+<span style="font:500 13px var(--font-mono);color:var(--muted-foreground)">{{ it.year }}</span>
+<span style="display:inline-flex;align-items:center;gap:6px;justify-self:start;height:26px;padding:0 10px;border-radius:999px;border:1px solid var(--border);font-size:12px;font-weight:550;color:{{ it.statusColor }}"><i class="icon-{{ it.statusIcon }}" aria-hidden="true" style="font-size:12px"></i>{{ it.status }}</span>
+<div style="display:flex;align-items:center;gap:10px">
+<sc-if value="{{ it.hasEps }}" hint-placeholder-val="{{ false }}"><div style="flex:1;height:4px;border-radius:2px;background:var(--secondary);overflow:hidden"><div style="height:100%;width:{{ it.pct }};background:{{ it.barColor }}"></div></div><span style="font:500 12px var(--font-mono);color:var(--muted-foreground);min-width:52px">{{ it.epText }}</span></sc-if>
+<sc-if value="{{ it.noEps }}" hint-placeholder-val="{{ false }}"><span style="font:500 12px var(--font-mono);color:var(--subtle-foreground)">{{ it.runtimeText }}</span></sc-if>
+</div>
+<span style="text-align:right;font:600 14px var(--font-mono);color:{{ it.ratingColor }}">{{ it.ratingText }}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ showLoading }}" hint-placeholder-val="{{ false }}">
+<div aria-busy="true" aria-label="Cargando biblioteca" style="display:grid;grid-template-columns:{{ gridCols }};gap:32px 20px">
+<sc-for list="{{ skeletons }}" as="sk" hint-placeholder-count="12">
+<div style="display:flex;flex-direction:column;gap:10px;animation:wlpulse 1.6s ease-in-out infinite">
+<div style="aspect-ratio:2/3;border-radius:8px;background:var(--muted)"></div>
+<div style="height:12px;width:80%;border-radius:4px;background:var(--muted)"></div>
+<div style="height:10px;width:50%;border-radius:4px;background:var(--muted)"></div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ showState }}" hint-placeholder-val="{{ false }}">
+<div role="{{ stateRole }}" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:96px 24px">
+<div style="width:56px;height:56px;border-radius:16px;background:var(--muted);border:1px solid var(--border);display:flex;align-items:center;justify-content:center"><i class="icon-{{ stateIcon }}" aria-hidden="true" style="font-size:24px;color:{{ stateIconColor }}"></i></div>
+<h2 style="margin:6px 0 0;font:600 22px/1.2 var(--font-display);letter-spacing:-0.015em">{{ stateTitle }}</h2>
+<p style="margin:0;max-width:380px;font-size:14px;line-height:1.5;color:var(--muted-foreground);text-wrap:pretty">{{ stateBody }}</p>
+<div style="display:flex;gap:10px;margin-top:8px">
+<button type="button" onClick="{{ stateAction }}" style="height:40px;padding:0 16px;border-radius:10px;border:0;background:var(--primary);color:var(--primary-foreground);font-weight:600;font-size:14px;cursor:pointer">{{ stateCta }}</button>
+<sc-if value="{{ stateCta2 }}" hint-placeholder-val="{{ false }}"><button type="button" style="height:40px;padding:0 16px;border-radius:10px;border:1px solid var(--border);background:transparent;font-weight:550;font-size:14px;cursor:pointer">{{ stateCta2 }}</button></sc-if>
+</div>
+</div>
+</sc-if>
+</section>
+
+<footer style="display:flex;align-items:center;gap:16px;padding:18px 40px;border-top:1px solid var(--border);font-size:12px;color:var(--subtle-foreground)">
+<div aria-label="Logo de TMDB" style="width:76px;height:26px;flex-shrink:0;border-radius:5px;border:1px dashed var(--input);display:flex;align-items:center;justify-content:center;font:500 10px var(--font-mono);color:var(--subtle-foreground);background:repeating-linear-gradient(135deg,var(--muted) 0 4px,transparent 4px 8px)">logo TMDB</div>
+<span style="flex:1;line-height:1.45">Este producto usa la API de TMDB, pero no está respaldado ni certificado por TMDB. Disponibilidad de streaming por JustWatch.</span>
+<span>Watchlog · proyecto personal</span>
+</footer>
+</main>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:10px;align-items:center;color:#a9a9b2;font:500 13px 'Geist Mono',monospace"><span style="background:#2c2c33;color:#eee;padding:3px 8px;border-radius:6px">1b</span>Biblioteca · Móvil 390</div>
+<div class="{{ themeClass }}" style="width:390px;height:844px;background:var(--background);color:var(--foreground);font-family:var(--font-sans);border-radius:44px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 10px #0c0c0e,0 40px 100px -30px rgb(0 0 0/.7)">
+<div style="height:50px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 30px;font:600 15px var(--font-sans)"><span>9:41</span><span style="display:flex;gap:6px;align-items:center"><i class="icon-signal" aria-hidden="true" style="font-size:14px"></i><i class="icon-wifi" aria-hidden="true" style="font-size:14px"></i><i class="icon-battery-full" aria-hidden="true" style="font-size:16px"></i></span></div>
+<div style="flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:96px">
+<div style="display:flex;align-items:center;gap:8px;padding:8px 16px 14px">
+<h1 style="margin:0;flex:1;font:600 28px/1.1 var(--font-display);letter-spacing:-0.025em">Biblioteca</h1>
+<button type="button" onClick="{{ toggleTheme }}" aria-label="Cambiar tema" style="width:44px;height:44px;border-radius:12px;border:1px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;color:var(--muted-foreground)"><i class="icon-{{ themeIcon }}" aria-hidden="true" style="font-size:18px"></i></button>
+<button type="button" aria-label="Registrar título" style="width:44px;height:44px;border-radius:12px;border:0;background:var(--primary);color:var(--primary-foreground);display:flex;align-items:center;justify-content:center"><i class="icon-plus" aria-hidden="true" style="font-size:20px"></i></button>
+</div>
+<div style="padding:0 16px 12px">
+<div role="group" aria-label="Tipo" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:3px;border-radius:12px;background:var(--muted);border:1px solid var(--border)">
+<sc-for list="{{ typeOpts }}" as="o" hint-placeholder-count="4">
+<button type="button" aria-pressed="{{ o.pressed }}" onClick="{{ o.onClick }}" style="height:38px;border-radius:9px;border:0;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:550;background:{{ o.bg }};color:{{ o.fg }};box-shadow:{{ o.shadow }}">
+<sc-if value="{{ o.hasShape }}" hint-placeholder-val="{{ false }}"><span style="width:6px;height:6px;background:{{ o.color }};border-radius:{{ o.r }};transform:rotate({{ o.rot }})"></span></sc-if>{{ o.short }}</button>
+</sc-for>
+</div>
+</div>
+<div role="group" aria-label="Estado" style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 16px 12px">
+<sc-for list="{{ statusChips }}" as="c" hint-placeholder-count="6">
+<button type="button" aria-pressed="{{ c.pressed }}" onClick="{{ c.onClick }}" style="flex-shrink:0;height:36px;padding:0 14px;border-radius:999px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.fg }};font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px">{{ c.label }}<span style="font:500 11px var(--font-mono);opacity:.7">{{ c.count }}</span></button>
+</sc-for>
+</div>
+<div style="display:flex;align-items:center;gap:8px;padding:0 16px 16px">
+<button type="button" style="height:36px;padding:0 12px;border-radius:10px;border:1px solid var(--border);background:transparent;font-size:13px;font-weight:500;display:flex;align-items:center;gap:7px"><i class="icon-sliders-horizontal" aria-hidden="true" style="font-size:14px"></i>Filtros<sc-if value="{{ showClear }}" hint-placeholder-val="{{ false }}"><span style="min-width:18px;height:18px;border-radius:9px;background:var(--brand);color:var(--brand-foreground);font:600 11px var(--font-mono);display:flex;align-items:center;justify-content:center">{{ activeCount }}</span></sc-if></button>
+<span style="flex:1;font-size:12px;color:var(--subtle-foreground)">{{ countText }}</span>
+<sc-for list="{{ viewOpts }}" as="v" hint-placeholder-count="2">
+<button type="button" aria-label="{{ v.label }}" aria-pressed="{{ v.pressed }}" onClick="{{ v.onClick }}" style="width:36px;height:36px;border-radius:10px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;background:{{ v.bg }};color:{{ v.fg }}"><i class="icon-{{ v.icon }}" aria-hidden="true" style="font-size:15px"></i></button>
+</sc-for>
+</div>
+
+<sc-if value="{{ showGrid }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 10px;padding:0 16px">
+<sc-for list="{{ items }}" as="it" hint-placeholder-count="9">
+<button type="button" aria-label="{{ it.aria }}" style="all:unset;display:flex;flex-direction:column;gap:7px;min-width:0">
+<div style="position:relative;aspect-ratio:2/3;border-radius:7px;overflow:hidden;background:{{ it.posterBg }};box-shadow:var(--shadow-poster)">
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgb(255 255 255/.035) 0 1px,transparent 1px 9px)"></div>
+<sc-if value="{{ it.rated }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:6px;right:6px;height:20px;padding:0 6px;border-radius:5px;background:rgb(12 12 16/.72);color:#f4f4f6;font:600 10px var(--font-mono);display:flex;align-items:center;gap:3px"><span style="color:oklch(0.8 0.13 45)">★</span>{{ it.ratingText }}</div></sc-if>
+<sc-if value="{{ it.showProgress }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:0;right:0;bottom:0;height:3px;background:rgb(255 255 255/.18)"><div style="height:100%;width:{{ it.pct }};background:oklch(0.82 0.14 155)"></div></div></sc-if>
+</div>
+<span style="font-size:12px;font-weight:550;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.title }}</span>
+<span style="display:flex;align-items:center;gap:5px;font-size:11px;margin-top:-3px;color:{{ it.typeColor }};font-weight:550"><span style="width:6px;height:6px;background:{{ it.typeColor }};border-radius:{{ it.typeR }};transform:rotate({{ it.typeRot }})"></span>{{ it.typeLabel }}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ showList }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;padding:0 16px">
+<sc-for list="{{ items }}" as="it" hint-placeholder-count="6">
+<div tabindex="0" style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+<div style="width:44px;aspect-ratio:2/3;flex-shrink:0;border-radius:5px;background:{{ it.posterBg }}"></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="font-size:14px;font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.title }}</span>
+<span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted-foreground)"><span style="color:{{ it.typeColor }};font-weight:550">{{ it.typeLabel }}</span>·<span style="color:{{ it.statusColor }}">{{ it.status }}</span><sc-if value="{{ it.hasEps }}" hint-placeholder-val="{{ false }}">· {{ it.epText }}</sc-if></span>
+</div>
+<span style="font:600 14px var(--font-mono);color:{{ it.ratingColor }}">{{ it.ratingText }}</span>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ showLoading }}" hint-placeholder-val="{{ false }}">
+<div aria-busy="true" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 10px;padding:0 16px">
+<sc-for list="{{ skeletonsM }}" as="sk" hint-placeholder-count="9"><div style="display:flex;flex-direction:column;gap:8px;animation:wlpulse 1.6s ease-in-out infinite"><div style="aspect-ratio:2/3;border-radius:7px;background:var(--muted)"></div><div style="height:10px;width:80%;border-radius:4px;background:var(--muted)"></div></div></sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ showState }}" hint-placeholder-val="{{ false }}">
+<div role="{{ stateRole }}" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:56px 28px">
+<div style="width:52px;height:52px;border-radius:15px;background:var(--muted);border:1px solid var(--border);display:flex;align-items:center;justify-content:center"><i class="icon-{{ stateIcon }}" aria-hidden="true" style="font-size:22px;color:{{ stateIconColor }}"></i></div>
+<h2 style="margin:4px 0 0;font:600 20px/1.2 var(--font-display)">{{ stateTitle }}</h2>
+<p style="margin:0;font-size:14px;line-height:1.5;color:var(--muted-foreground);text-wrap:pretty">{{ stateBody }}</p>
+<button type="button" onClick="{{ stateAction }}" style="margin-top:6px;height:44px;padding:0 18px;border-radius:12px;border:0;background:var(--primary);color:var(--primary-foreground);font-weight:600;font-size:14px">{{ stateCta }}</button>
+</div>
+</sc-if>
+<div style="display:flex;gap:12px;align-items:flex-start;margin:32px 16px 0;padding-top:16px;border-top:1px solid var(--border);font-size:11px;line-height:1.45;color:var(--subtle-foreground)">
+<div aria-label="Logo de TMDB" style="width:60px;height:22px;flex-shrink:0;border-radius:4px;border:1px dashed var(--input);display:flex;align-items:center;justify-content:center;font:500 9px var(--font-mono);background:repeating-linear-gradient(135deg,var(--muted) 0 4px,transparent 4px 8px)">logo TMDB</div>
+<span>Este producto usa la API de TMDB, pero no está respaldado ni certificado por TMDB.</span>
+</div>
+</div>
+<nav aria-label="Principal" style="position:absolute;left:0;right:0;bottom:0;padding:8px 12px 26px;background:var(--sidebar);border-top:1px solid var(--sidebar-border);display:grid;grid-template-columns:repeat(4,1fr)">
+<a href="#" aria-current="page" style="display:flex;flex-direction:column;align-items:center;gap:4px;min-height:48px;justify-content:center;text-decoration:none;color:var(--foreground);font-size:11px;font-weight:600"><i class="icon-library-big" aria-hidden="true" style="font-size:21px;color:var(--brand)"></i>Biblioteca</a>
+<a href="#" style="display:flex;flex-direction:column;align-items:center;gap:4px;min-height:48px;justify-content:center;text-decoration:none;color:var(--muted-foreground);font-size:11px"><i class="icon-sparkles" aria-hidden="true" style="font-size:21px"></i>Para ti</a>
+<a href="#" style="display:flex;flex-direction:column;align-items:center;gap:4px;min-height:48px;justify-content:center;text-decoration:none;color:var(--muted-foreground);font-size:11px"><i class="icon-search" aria-hidden="true" style="font-size:21px"></i>Buscar</a>
+<a href="#" style="display:flex;flex-direction:column;align-items:center;gap:4px;min-height:48px;justify-content:center;text-decoration:none;color:var(--muted-foreground);font-size:11px"><i class="icon-chart-column" aria-hidden="true" style="font-size:21px"></i>Estadísticas</a>
+</nav>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;estado&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;normal&quot;,&quot;cargando&quot;,&quot;vacío&quot;,&quot;error&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;'normal'|'cargando'|'vacío'|'error'&quot;,&quot;section&quot;:&quot;Estados&quot;},&quot;columnas&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;min&quot;:5,&quot;max&quot;:8,&quot;default&quot;:6,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Grid&quot;}}">
+const T=[
+['Frieren: Beyond Journey’s End',2023,'anime',['Fantasía','Aventura'],9.5,'Terminado',28,28,24,165],
+['The Bear',2022,'series',['Drama','Comedia'],8.5,'Viendo',18,28,32,35],
+['Dune: Parte dos',2024,'movie',['Ciencia ficción','Aventura'],9,'Terminado',null,null,166,65],
+['Dandadan',2024,'anime',['Acción','Comedia'],null,'Viendo',8,24,24,335],
+['Perfect Days',2023,'movie',['Drama'],9,'Terminado',null,null,124,140],
+['Severance',2022,'series',['Ciencia ficción','Misterio'],9,'Viendo',12,19,50,225],
+['Past Lives',2023,'movie',['Drama','Romance'],8.5,'Terminado',null,null,106,15],
+['Cowboy Bebop',1998,'anime',['Ciencia ficción','Acción'],10,'Terminado',26,26,24,255],
+['Aftersun',2022,'movie',['Drama'],null,'Pendiente',null,null,102,200],
+['Shōgun',2024,'series',['Drama','Historia'],9,'Terminado',10,10,60,5],
+['Mushishi',2005,'anime',['Fantasía','Misterio'],8.5,'En pausa',14,26,24,120],
+['Anatomía de una caída',2023,'movie',['Thriller','Drama'],8,'Terminado',null,null,152,90],
+['Pluto',2023,'anime',['Ciencia ficción','Thriller'],null,'Pendiente',0,8,60,285],
+['Succession',2018,'series',['Drama'],9.5,'Terminado',39,39,60,50],
+['Decision to Leave',2022,'movie',['Misterio','Romance'],8.5,'Terminado',null,null,138,190],
+['Twin Peaks',1990,'series',['Misterio','Drama'],6,'Abandonado',9,30,47,350],
+['Vinland Saga',2019,'anime',['Acción','Historia'],9,'Terminado',48,48,24,40],
+['The Last of Us',2023,'series',['Drama','Ciencia ficción'],null,'Pendiente',0,9,55,105],
+['El viaje de Chihiro',2001,'anime',['Fantasía','Aventura'],10,'Terminado',null,null,125,300],
+['Oppenheimer',2023,'movie',['Historia','Drama'],7.5,'Terminado',null,null,180,25]
+];
+const TYPE={movie:{label:'Película',plural:'Películas',short:'Cine',color:'var(--type-movie)',r:'1.5px',rot:'0deg'},series:{label:'Serie',plural:'Series',short:'Series',color:'var(--type-series)',r:'50%',rot:'0deg'},anime:{label:'Anime',plural:'Anime',short:'Anime',color:'var(--type-anime)',r:'1px',rot:'45deg'}};
+const STATUS={'Viendo':{icon:'play',color:'var(--status-watching)'},'Pendiente':{icon:'clock',color:'var(--status-pending)'},'Terminado':{icon:'check',color:'var(--status-completed)'},'En pausa':{icon:'pause',color:'var(--status-paused)'},'Abandonado':{icon:'x',color:'var(--status-dropped)'}};
+const GENRES=[...new Set(T.flatMap(d=>d[3]))].sort((a,b)=>a.localeCompare(b,'es'));
+const fmt=r=>r==null?'—':(r===10?'10':r.toFixed(1));
+const ITEMS=T.map((d,i)=>{const [title,year,type,g,r,s,ep,tot,mins,h]=d;const ty=TYPE[type],st=STATUS[s];const hasEps=ep!=null;
+return {id:i,title,year,type,g,r,s,status:s,typeLabel:ty.label,typeColor:ty.color,typeR:ty.r,typeRot:ty.rot,genresText:g.join(' · '),
+posterBg:`linear-gradient(165deg, oklch(0.44 0.07 ${h}) 0%, oklch(0.24 0.045 ${h}) 100%)`,
+rated:r!=null,ratingText:fmt(r),ratingColor:r==null?'var(--subtle-foreground)':'var(--foreground)',
+statusIcon:st.icon,statusColor:st.color,showStatusChip:s!=='Terminado',statusChipText:(s==='Viendo'&&hasEps)?`E${ep}/${tot}`:s,
+hasEps,noEps:!hasEps,epText:hasEps?`${ep}/${tot} ep`:'',pct:hasEps?`${(ep/tot*100).toFixed(1)}%`:'0%',barColor:s==='Terminado'?'var(--muted-foreground)':st.color,
+showProgress:hasEps&&(s==='Viendo'||s==='En pausa'),runtimeText:`${Math.floor(mins/60)} h ${mins%60} min`,
+watchedMin:hasEps?ep*mins:(s==='Terminado'||s==='Abandonado'?mins:0),
+aria:`${title}, ${ty.label}, ${year}, ${s}${r!=null?', mi nota '+fmt(r):''}`};});
+const DECADES=[{v:'all',l:'Año: todos'},{v:'2020',l:'2020s'},{v:'2010',l:'2010s'},{v:'2000',l:'2000s'},{v:'old',l:'Antes de 2000'}];
+const RATINGS=[{v:'all',l:'Nota: todas'},{v:'9',l:'9 o más'},{v:'8',l:'8 o más'},{v:'7',l:'7 o más'},{v:'none',l:'Sin nota'}];
+const INIT={type:'all',status:'all',genre:'all',decade:'all',minRating:'all'};
+class Component extends DCLogic {
+  state={view:'grid',sort:'recent',theme:'dark',...INIT};
+  renderVals(){
+    const s=this.state,mode=this.props.estado??'normal',cols=this.props.columnas??6;
+    const decOk=it=>s.decade==='all'||(s.decade==='old'?it.year<2000:it.year>=+s.decade&&it.year<+s.decade+10);
+    const ratOk=it=>s.minRating==='all'||(s.minRating==='none'?it.r==null:it.r!=null&&it.r>=+s.minRating);
+    const base=ITEMS.filter(it=>(s.genre==='all'||it.g.includes(s.genre))&&decOk(it)&&ratOk(it));
+    const byType=base.filter(it=>s.type==='all'||it.type===s.type);
+    let list=byType.filter(it=>s.status==='all'||it.s===s.status);
+    const sorters={recent:(a,b)=>a.id-b.id,rating:(a,b)=>(b.r??-1)-(a.r??-1),title:(a,b)=>a.title.localeCompare(b.title,'es'),year:(a,b)=>b.year-a.year};
+    list=[...list].sort(sorters[s.sort]);
+    const on={bg:'var(--card)',fg:'var(--foreground)',shadow:'var(--shadow-sm)'},off={bg:'transparent',fg:'var(--muted-foreground)',shadow:'none'};
+    const typeOpts=[{k:'all',label:'Todo',short:'Todo'},...Object.entries(TYPE).map(([k,t])=>({k,label:t.plural,short:t.short,color:t.color,r:t.r,rot:t.rot,hasShape:true}))]
+      .map(o=>({...o,...(s.type===o.k?on:off),pressed:s.type===o.k?'true':'false',count:o.k==='all'?base.length:base.filter(i=>i.type===o.k).length,onClick:()=>this.setState({type:o.k})}));
+    const statusChips=[{k:'all',label:'Todos'},...Object.keys(STATUS).map(k=>({k,label:k,icon:STATUS[k].icon,iconColor:STATUS[k].color}))].map(c=>{const a=s.status===c.k;
+      return {...c,pressed:a?'true':'false',count:c.k==='all'?byType.length:byType.filter(i=>i.s===c.k).length,bg:a?'var(--foreground)':'transparent',fg:a?'var(--background)':'var(--muted-foreground)',border:a?'var(--foreground)':'var(--border)',iconColor:a?'var(--background)':c.iconColor,onClick:()=>this.setState({status:c.k})};});
+    const sel=(key,label,options)=>{const a=s[key]!=='all';return {label,value:s[key],options,onChange:e=>this.setState({[key]:e.target.value}),border:a?'var(--foreground)':'var(--border)',bg:a?'var(--accent)':'transparent',fg:a?'var(--foreground)':'var(--muted-foreground)'};};
+    const selects=[sel('genre','Género',[{v:'all',l:'Género: todos'},...GENRES.map(g=>({v:g,l:g}))]),sel('decade','Año',DECADES),sel('minRating','Nota',RATINGS)];
+    const activeCount=Object.keys(INIT).filter(k=>s[k]!==INIT[k]).length;
+    const viewOpts=[{k:'grid',icon:'layout-grid',label:'Pósters'},{k:'list',icon:'list',label:'Lista'}].map(v=>({...v,...(s.view===v.k?on:off),pressed:s.view===v.k?'true':'false',onClick:()=>this.setState({view:v.k})}));
+    const hours=Math.round(ITEMS.reduce((a,i)=>a+i.watchedMin,0)/60);
+    const clearAll=()=>this.setState({...INIT});
+    let st=null;
+    if(mode==='error') st={role:'alert',icon:'circle-alert',iconColor:'var(--destructive)',title:'No pudimos cargar tu biblioteca',body:'Hubo un problema al conectar con el servidor. Tus registros están a salvo.',cta:'Reintentar',cta2:false,action:()=>{}};
+    else if(mode==='vacío') st={role:'status',icon:'clapperboard',iconColor:'var(--muted-foreground)',title:'Tu biblioteca está vacía',body:'Registra lo último que viste. Busca el título, elige el estado y listo: menos de 10 segundos.',cta:'Registrar un título',cta2:'Calificar populares',action:()=>{}};
+    else if(mode==='normal'&&list.length===0) st={role:'status',icon:'search-x',iconColor:'var(--muted-foreground)',title:'Nada coincide con estos filtros',body:'Prueba con otro estado o quita algún filtro para ver más títulos.',cta:'Limpiar filtros',cta2:false,action:()=>this.setState({...INIT,status:'all',type:'all'})};
+    const loading=mode==='cargando',content=mode==='normal'&&list.length>0;
+    return {
+      themeClass:s.theme,themeIcon:s.theme==='dark'?'sun':'moon',toggleTheme:()=>this.setState({theme:s.theme==='dark'?'light':'dark'}),
+      summary:`${ITEMS.length} títulos · ${hours} h vistas · nota media ${(ITEMS.filter(i=>i.r!=null).reduce((a,i)=>a+i.r,0)/ITEMS.filter(i=>i.r!=null).length).toFixed(1)}`,
+      countText:`${list.length} de ${ITEMS.length} títulos`,
+      typeNav:Object.entries(TYPE).map(([k,t])=>({label:t.plural,color:t.color,r:t.r,rot:t.rot,count:ITEMS.filter(i=>i.type===k).length,onClick:()=>this.setState({type:k})})),
+      typeOpts,statusChips,selects,viewOpts,activeCount,showClear:activeCount>0,clearAll,
+      sort:s.sort,onSort:e=>this.setState({sort:e.target.value}),
+      items:list,gridCols:`repeat(${cols}, minmax(0,1fr))`,
+      showGrid:content&&s.view==='grid',showList:content&&s.view==='list',showLoading:loading,
+      skeletons:Array.from({length:cols*2},(_,i)=>({i})),skeletonsM:Array.from({length:9},(_,i)=>({i})),
+      showState:!!st,stateRole:st?.role,stateIcon:st?.icon,stateIconColor:st?.iconColor,stateTitle:st?.title,stateBody:st?.body,stateCta:st?.cta,stateCta2:st?.cta2,stateAction:st?.action
+    };
+  }
+}
+</script>
+</body>
+</html>

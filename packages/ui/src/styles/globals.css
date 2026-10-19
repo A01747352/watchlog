@@ -1,0 +1,146 @@
+/*
+ * Entrada de estilos de Watchlog: Tailwind v4 + shadcn/ui + tokens de diseño.
+ * Fuente: docs/design/globals.css. Las apps importan este archivo:
+ *   @import "@watchlog/ui/globals.css";
+ * Nunca uses colores o tamaños sueltos: todo sale de estos tokens.
+ */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./tokens.css";
+
+/* Componentes de este paquete (Tailwind no escanea node_modules por defecto) */
+@source "../components";
+
+/* Variantes de tema: oscuro por defecto, .light lo sobrescribe (next-themes, attribute="class") */
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));
+
+@theme inline {
+  /* ── Color ───────────────────────────────────────── */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-movie: var(--type-movie);
+  --color-series: var(--type-series);
+  --color-anime: var(--type-anime);
+  --color-status-pending: var(--status-pending);
+  --color-status-watching: var(--status-watching);
+  --color-status-completed: var(--status-completed);
+  --color-status-paused: var(--status-paused);
+  --color-status-dropped: var(--status-dropped);
+  --color-on-poster: var(--on-poster);
+  --color-on-poster-foreground: var(--on-poster-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-border: var(--sidebar-border);
+
+  /* ── Tipografía ──────────────────────────────────── */
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  /* Peso intermedio que usan los mockups en botones secundarios y etiquetas */
+  --font-weight-emphasis: 550;
+
+  /* Escala: tamaño / interlineado / tracking / peso (HANDOFF §2) */
+  --text-display: 2.5rem;
+  --text-display--line-height: 1.1;
+  --text-display--letter-spacing: -0.025em;
+  --text-display--font-weight: 600;
+  --text-page: var(--page-title-size);
+  --text-page--line-height: 1.12;
+  --text-page--letter-spacing: -0.02em;
+  --text-page--font-weight: 600;
+  --text-h1: 2rem;
+  --text-h1--line-height: 1.15;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h1--font-weight: 600;
+  --text-h2: 1.375rem;
+  --text-h2--line-height: 1.27;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h2--font-weight: 600;
+  --text-h3: 1.0625rem;
+  --text-h3--line-height: 1.35;
+  --text-h3--font-weight: 600;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.5;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.46;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.35;
+  --text-caption--font-weight: 500;
+
+  /* ── Radios ──────────────────────────────────────── */
+  --radius-xs: calc(var(--radius) - 6px); /* 4px  chips internos */
+  --radius-sm: calc(var(--radius) - 4px); /* 6px  badges, kbd */
+  --radius-md: calc(var(--radius) - 2px); /* 8px  pósters, inputs */
+  --radius-lg: var(--radius); /* 10px botones */
+  --radius-xl: calc(var(--radius) + 4px); /* 14px paneles y cards */
+  --radius-2xl: calc(var(--radius) + 10px); /* 20px diálogos y sheets */
+
+  /* ── Sombras ─────────────────────────────────────── */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-poster: var(--shadow-poster);
+
+  /* ── Espaciado y proporciones ────────────────────── */
+  --spacing: 0.25rem; /* base 4px: 2=8 · 3=12 · 4=16 · 5=20 · 6=24 · 8=32 · 10=40 */
+  --aspect-poster: 2 / 3;
+  --aspect-backdrop: 16 / 9;
+
+  /* ── Animación ───────────────────────────────────── */
+  --animate-skeleton: wl-pulse 1.6s ease-in-out infinite;
+
+  @keyframes wl-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.45;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring;
+  }
+
+  body {
+    @apply bg-background text-body text-foreground font-sans antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

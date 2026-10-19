@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/styles/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@watchlog/ui/components",
+    "utils": "@watchlog/ui/lib/utils",
+    "hooks": "@watchlog/ui/hooks",
+    "lib": "@watchlog/ui/lib",
+    "ui": "@watchlog/ui/components"
+  }
+}
