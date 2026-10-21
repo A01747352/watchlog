@@ -1,7 +1,9 @@
 # Desarrollo: `docker compose up db` y `pnpm dev`.
-# Self-hosted: `docker compose up --build` levanta web + api + db.
-# El servicio cron se añade en la Fase 7.
+# Self-hosted: `docker compose up --build` levanta db, migraciones, api y web
+# (necesita BETTER_AUTH_SECRET en .env). El servicio cron se añade en la Fase 7.
 name: watchlog
+
+x-database-url: &database-url postgresql://${POSTGRES_USER:-watchlog}:${POSTGRES_PASSWORD:-watchlog}@db:5432/${POSTGRES_DB:-watchlog}
 
 services:
   db:
@@ -21,31 +23,54 @@ services:
       timeout: 3s
       retries: 10
 
+  migrate:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: migrate
+    environment:
+      DATABASE_URL: *database-url
+    depends_on:
+      db:
+        condition: service_healthy
+
   api:
     build:
       context: .
       dockerfile: apps/api/Dockerfile
+      target: runner
     restart: unless-stopped
     environment:
       NODE_ENV: production
       PORT: 3001
+      DATABASE_URL: *database-url
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?Define BETTER_AUTH_SECRET en .env}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL:-http://localhost:3000}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:-}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
     ports:
       - "3001:3001"
     depends_on:
-      db:
-        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
 
   web:
     build:
       context: .
       dockerfile: apps/web/Dockerfile
+      args:
+        # Los rewrites de Next se resuelven al compilar.
+        API_URL: http://api:3001
     restart: unless-stopped
     environment:
       API_URL: http://api:3001
     ports:
       - "3000:3000"
     depends_on:
-      - api
+      api:
+        condition: service_healthy
 
 volumes:
   db-data:

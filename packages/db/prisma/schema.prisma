@@ -1,0 +1,187 @@
+// Esquema de Watchlog (docs/SPEC.md, "Modelo de datos").
+// User, Session, Account y Verification siguen el esquema base de Better Auth.
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum MediaType {
+  MOVIE
+  SERIES
+  ANIME
+}
+
+enum Source {
+  TMDB
+  ANILIST
+}
+
+enum Status {
+  PLANNED
+  WATCHING
+  COMPLETED
+  DROPPED
+  ON_HOLD
+}
+
+// ── Better Auth ─────────────────────────────────────────────
+
+model User {
+  id              String           @id
+  name            String
+  email           String           @unique
+  emailVerified   Boolean          @default(false)
+  image           String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  sessions        Session[]
+  accounts        Account[]
+  entries         LibraryEntry[]
+  recommendations Recommendation[]
+  invitesCreated  Invite[]         @relation("InviteCreatedBy")
+  inviteUsed      Invite?          @relation("InviteUsedBy")
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+// ── Watchlog ────────────────────────────────────────────────
+
+model Title {
+  id            String         @id @default(cuid())
+  source        Source
+  externalId    String // id en TMDB o AniList
+  tmdbId        Int? // referencia cruzada para anime
+  type          MediaType
+  title         String
+  originalTitle String?
+  year          Int?
+  posterPath    String?
+  backdropPath  String?
+  overview      String?
+  genres        String[]
+  tags          String[] // keywords TMDB / tags AniList
+  people        String[] // director, creadores, estudio
+  runtimeMin    Int? // película o duración por episodio
+  episodes      Int?
+  seasons       Int?
+  raw           Json // respuesta normalizada completa
+  fetchedAt     DateTime
+  entries       LibraryEntry[]
+  recommended   Recommendation[]
+
+  @@unique([source, externalId])
+  @@index([type])
+}
+
+model LibraryEntry {
+  id             String    @id @default(cuid())
+  userId         String
+  titleId        String
+  status         Status
+  rating         Decimal?  @db.Decimal(3, 1) // 1.0 – 10.0
+  review         String?
+  favorite       Boolean   @default(false)
+  userTags       String[]
+  currentSeason  Int?
+  currentEpisode Int?
+  startedAt      DateTime?
+  finishedAt     DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title          Title     @relation(fields: [titleId], references: [id])
+  viewings       Viewing[]
+
+  @@unique([userId, titleId])
+  @@index([userId, status])
+}
+
+model Viewing {
+  id        String       @id @default(cuid())
+  entryId   String
+  watchedOn DateTime
+  note      String?
+  entry     LibraryEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+
+  @@index([entryId])
+}
+
+model Recommendation {
+  id          String   @id @default(cuid())
+  userId      String
+  titleId     String
+  score       Float
+  reasons     Json // [{ kind: "similar_to", titleId, weight }, ...]
+  dismissed   Boolean  @default(false)
+  generatedAt DateTime
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       Title    @relation(fields: [titleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, titleId])
+  @@index([userId, score])
+}
+
+model Invite {
+  id        String    @id @default(cuid())
+  code      String    @unique
+  createdBy String? // null = invitación de sistema (seed)
+  usedBy    String?   @unique
+  usedAt    DateTime?
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+  creator   User?     @relation("InviteCreatedBy", fields: [createdBy], references: [id], onDelete: SetNull)
+  user      User?     @relation("InviteUsedBy", fields: [usedBy], references: [id], onDelete: SetNull)
+}

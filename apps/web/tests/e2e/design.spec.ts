@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-test("la portada carga con el tema oscuro y permite cambiar a claro", async ({ page }) => {
-  await page.goto("/");
+test("el sistema de diseño carga con el tema oscuro y permite cambiar a claro", async ({ page }) => {
+  await page.goto("/design");
 
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.locator("html")).toHaveClass(/dark/);
@@ -15,7 +15,7 @@ test("la portada carga con el tema oscuro y permite cambiar a claro", async ({ p
 });
 
 test("el pie incluye la atribución de TMDB", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/design");
   await expect(page.getByRole("contentinfo")).toContainText(
     "Este producto usa la API de TMDB, pero no está respaldado ni certificado por TMDB.",
   );
