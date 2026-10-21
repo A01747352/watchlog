@@ -1,10 +1,11 @@
 import { z } from "zod";
 
-/** Respuesta de `GET /health`. En la Fase 2 se añadirá el estado de la base de datos. */
+/** Respuesta de `GET /health`: 200 si todo está bien, 503 si la base de datos no responde. */
 export const healthResponseSchema = z.object({
-  status: z.literal("ok"),
+  status: z.enum(["ok", "degraded"]),
   service: z.literal("api"),
   version: z.string(),
+  database: z.enum(["up", "down"]),
   uptimeSeconds: z.number().nonnegative(),
   timestamp: z.iso.datetime(),
 });

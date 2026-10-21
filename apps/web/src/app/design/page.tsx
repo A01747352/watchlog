@@ -10,14 +10,17 @@ import {
   type ColorToken,
 } from "@watchlog/ui/tokens";
 import { Plus } from "lucide-react";
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { TmdbAttribution } from "@/components/tmdb-attribution";
 
+export const metadata: Metadata = { title: "Sistema de diseño" };
+
 /*
- * Página de inicio mínima (Fase 1): comprueba que los tokens de packages/ui llegan a
- * Tailwind en ambos temas. Las pantallas reales (Biblioteca en "/") llegan en fases posteriores.
+ * Página del sistema de diseño (/design): comprueba que los tokens de packages/ui llegan a
+ * Tailwind en ambos temas. Pública; sirve de referencia viva de los tokens.
  * Las clases se listan completas para que Tailwind las detecte al escanear el código.
  */
 
@@ -111,7 +114,7 @@ function TokenLabel({ children }: { children: ReactNode }) {
   return <code className="text-caption text-muted-foreground font-mono">{children}</code>;
 }
 
-export default function HomePage() {
+export default function DesignSystemPage() {
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="border-border flex items-center justify-between gap-4 border-b px-4 py-3 lg:px-10">

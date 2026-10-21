@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# Imagen de apps/api (Hono sobre Node). Se afina con turbo prune en la Fase 9.
+# Imagen de apps/api (Hono sobre Node). Se afina en la Fase 9.
 FROM node:24-alpine AS base
 RUN corepack enable
 WORKDIR /repo
@@ -13,6 +13,12 @@ COPY --from=prune /repo/out/json/ .
 RUN pnpm install --frozen-lockfile
 COPY --from=prune /repo/out/full/ .
 RUN pnpm turbo run build --filter=api
+
+# Tarea de un solo uso: aplica las migraciones (`prisma migrate deploy`) y termina.
+FROM build AS migrate
+WORKDIR /repo/packages/db
+USER node
+CMD ["node", "node_modules/prisma/build/index.js", "migrate", "deploy"]
 
 FROM node:24-alpine AS runner
 WORKDIR /app

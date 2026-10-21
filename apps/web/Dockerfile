@@ -12,7 +12,9 @@ FROM base AS build
 COPY --from=prune /repo/out/json/ .
 RUN pnpm install --frozen-lockfile
 COPY --from=prune /repo/out/full/ .
-ENV NEXT_TELEMETRY_DISABLED=1 NEXT_OUTPUT_STANDALONE=1
+# rewrites() de Next se resuelven al compilar: API_URL tiene que existir aquí.
+ARG API_URL=http://api:3001
+ENV NEXT_TELEMETRY_DISABLED=1 NEXT_OUTPUT_STANDALONE=1 API_URL=$API_URL
 RUN pnpm turbo run build --filter=web
 
 FROM node:24-alpine AS runner
