@@ -1,6 +1,8 @@
 import { apiErrorSchema, type ApiError } from "@watchlog/contracts";
 import type { z } from "zod";
 
+import { apiUrl } from "./api-url";
+
 /**
  * Cliente de la API validado con los esquemas de @watchlog/contracts.
  * En el navegador usa rutas relativas (/api/* se reenvía a la API con un rewrite);
@@ -11,9 +13,7 @@ export type ApiResult<T> = { ok: true; data: T } | { ok: false; status: number; 
 
 function resolve(path: string) {
   if (typeof window !== "undefined") return path;
-  const base = process.env.API_URL;
-  if (!base) throw new Error("Falta API_URL en apps/web.");
-  return new URL(path, base).toString();
+  return new URL(path, apiUrl()).toString();
 }
 
 export async function apiFetch<Schema extends z.ZodType>(
@@ -36,7 +36,8 @@ export async function apiFetch<Schema extends z.ZodType>(
     };
   }
 
-  const body: unknown = await res.json().catch(() => null);
+  // 204 (p. ej. DELETE) no trae cuerpo: se valida `undefined` (usa `z.undefined()` como esquema).
+  const body: unknown = res.status === 204 ? undefined : await res.json().catch(() => null);
   if (!res.ok) {
     const parsed = apiErrorSchema.safeParse(body);
     return {
@@ -47,5 +48,15 @@ export async function apiFetch<Schema extends z.ZodType>(
         : { code: "UNKNOWN", message: "Algo salió mal. Inténtalo de nuevo." },
     };
   }
-  return { ok: true, data: schema.parse(body) };
+  const parsed = schema.safeParse(body);
+  if (!parsed.success) {
+    // La API respondió algo que no cumple el contrato: mejor un error claro que datos a medias.
+    console.error(`Respuesta de ${path} fuera de contrato`, parsed.error.issues);
+    return {
+      ok: false,
+      status: res.status,
+      error: { code: "INVALID_RESPONSE", message: "Algo salió mal. Inténtalo de nuevo." },
+    };
+  }
+  return { ok: true, data: parsed.data };
 }

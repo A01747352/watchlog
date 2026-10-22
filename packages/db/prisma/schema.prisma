@@ -132,7 +132,8 @@ model LibraryEntry {
   titleId        String
   status         Status
   rating         Decimal?  @db.Decimal(3, 1) // 1.0 – 10.0
-  review         String?
+  review         String? // reseña corta, máx. 280 caracteres
+  reviewSpoilers Boolean   @default(false)
   favorite       Boolean   @default(false)
   userTags       String[]
   currentSeason  Int?

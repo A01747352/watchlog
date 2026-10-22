@@ -27,6 +27,7 @@ describe("searchResultSchema", () => {
       year: 2023,
       posterUrl: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/x.jpg",
       overview: null,
+      library: { entryId: "e1", status: "COMPLETED" },
     };
     expect(searchResultSchema.parse(result)).toEqual(result);
   });
@@ -43,6 +44,7 @@ describe("searchResultSchema", () => {
         year: null,
         posterUrl: "/abc.jpg",
         overview: null,
+        library: null,
       }).success,
     ).toBe(false);
   });

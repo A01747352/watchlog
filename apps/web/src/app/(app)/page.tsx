@@ -1,30 +1,42 @@
-import { Library } from "lucide-react";
+import { Button } from "@watchlog/ui/components/button";
+import { Library, Search } from "lucide-react";
+import Link from "next/link";
 
 import { InvitePanel } from "@/components/invite-panel";
+import { PageHeader } from "@/components/shell/page-header";
 import { getSessionUser } from "@/lib/session";
 
 /**
- * Inicio con sesión. La Biblioteca (grid de pósters, filtros) llega en las Fases 4-5;
- * mientras tanto se muestra su estado vacío según docs/design (HANDOFF §4, Estados).
+ * Biblioteca. La vista con grid de pósters y filtros llega en la Fase 5; mientras tanto, el
+ * estado vacío del diseño (HANDOFF §4, Estados) con su CTA a registrar.
  */
 export default async function HomePage() {
   const user = await getSessionUser();
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-col gap-2">
-        <h1 className="font-display text-page">Hola, {user?.name}</h1>
-        <p className="text-muted-foreground">Tu biblioteca</p>
-      </div>
+      <PageHeader
+        title="Biblioteca"
+        description={`Hola, ${user?.name ?? ""}`}
+        actions={
+          <Button asChild className="hidden sm:inline-flex">
+            <Link href="/search">
+              <Search aria-hidden="true" />
+              Registrar
+            </Link>
+          </Button>
+        }
+      />
 
       <div className="border-border flex flex-col items-center gap-3 rounded-xl border border-dashed px-6 py-12 text-center">
         <span className="bg-secondary flex size-14 items-center justify-center rounded-xl" aria-hidden="true">
           <Library className="text-muted-foreground size-6" />
         </span>
         <h2 className="font-display text-h2">Aún no hay nada aquí</h2>
-        <p className="text-muted-foreground max-w-sm">
-          Pronto podrás buscar películas, series y anime y registrar lo último que viste.
-        </p>
+        <p className="text-muted-foreground max-w-sm">Registra lo último que viste.</p>
+        <Button asChild>
+          <Link href="/search">Registrar</Link>
+        </Button>
       </div>
 
       <InvitePanel />

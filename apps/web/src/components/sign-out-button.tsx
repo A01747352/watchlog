@@ -7,7 +7,7 @@ import { useState } from "react";
 
 import { authClient } from "@/lib/auth-client";
 
-export function SignOutButton() {
+export function SignOutButton({ compact = false }: { compact?: boolean }) {
   const router = useRouter();
   const [pending, setPending] = useState(false);
 
@@ -19,9 +19,15 @@ export function SignOutButton() {
   }
 
   return (
-    <Button variant="ghost" onClick={signOut} disabled={pending}>
+    <Button
+      variant={compact ? "outline" : "ghost"}
+      size={compact ? "touch" : "default"}
+      onClick={signOut}
+      disabled={pending}
+      className={compact ? undefined : "w-full justify-start"}
+    >
       <LogOut aria-hidden="true" />
-      Salir
+      <span className={compact ? "sr-only" : undefined}>Salir</span>
     </Button>
   );
 }

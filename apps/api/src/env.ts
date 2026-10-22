@@ -22,6 +22,9 @@ const envSchema = z
     TMDB_READ_TOKEN: optional,
     /** Idioma de títulos y sinopsis de TMDB. */
     TMDB_LANGUAGE: z.string().default("es-ES"),
+    /** Solo para tests E2E (servidor falso de proveedores); en producción, los oficiales. */
+    TMDB_API_URL: z.preprocess((v) => (v === "" ? undefined : v), z.url().optional()),
+    ANILIST_API_URL: z.preprocess((v) => (v === "" ? undefined : v), z.url().optional()),
   })
   .superRefine((env, ctx) => {
     for (const provider of ["GITHUB", "GOOGLE"] as const) {

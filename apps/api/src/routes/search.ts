@@ -11,11 +11,13 @@ import {
   type ProviderSearchItem,
   unifiedSearch,
 } from "@watchlog/providers";
+import type { DbClient } from "@watchlog/db";
 import { Hono } from "hono";
 
 import type { Auth } from "../auth";
 import { createTtlCache, type TtlCache } from "../lib/ttl-cache";
 import { requireSession } from "../middleware/session";
+import { libraryStatusByRef } from "../services/library";
 
 export type SearchProviders = { tmdb?: MediaProvider | undefined; anilist?: MediaProvider | undefined };
 
@@ -39,6 +41,7 @@ const toResult = ({
   year,
   posterUrl,
   overview,
+  library: null,
 });
 
 /**
@@ -47,14 +50,28 @@ const toResult = ({
  * se cachean unos minutos en memoria; las parciales (un proveedor caído) no.
  */
 export function searchRoute({
+  db,
   auth,
   providers,
   cache = createTtlCache<SearchResponse>({ ttlMs: 5 * 60_000, maxEntries: 500 }),
 }: {
+  db: DbClient;
   auth: Auth;
   providers: SearchProviders;
   cache?: TtlCache<SearchResponse>;
 }) {
+  /** El estado en la biblioteca es de cada usuario: se añade después de la caché compartida. */
+  async function withLibrary(body: SearchResponse, userId: string): Promise<SearchResponse> {
+    const library = await libraryStatusByRef(db, userId, body.results);
+    return {
+      ...body,
+      results: body.results.map((r) => ({
+        ...r,
+        library: library.get(`${r.source}:${r.externalId}`) ?? null,
+      })),
+    };
+  }
+
   return new Hono().get("/", requireSession(auth), async (c) => {
     const parsed = searchQuerySchema.safeParse(c.req.query());
     if (!parsed.success) {
@@ -65,7 +82,7 @@ export function searchRoute({
 
     const key = `${type}:${normalizeTitle(q)}`;
     const cached = cache.get(key);
-    if (cached) return c.json<SearchResponse>({ ...cached, query: q });
+    if (cached) return c.json<SearchResponse>(await withLibrary({ ...cached, query: q }, c.var.user.id));
 
     let result;
     try {
@@ -94,6 +111,6 @@ export function searchRoute({
       sources: result.sources,
     };
     if (!Object.values(result.sources).includes("error")) cache.set(key, body);
-    return c.json<SearchResponse>(body);
+    return c.json<SearchResponse>(await withLibrary(body, c.var.user.id));
   });
 }

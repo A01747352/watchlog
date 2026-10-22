@@ -31,6 +31,22 @@ const shapeClass: Record<MediaType, string> = {
   anime: "rotate-45 rounded-[1px]",
 };
 
+/** Solo la forma del tipo (decorativa), p. ej. en pestañas que ya llevan el texto. */
+export function TypeShape({ type, className }: { type: MediaType; className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={cn(
+        "size-[7px] shrink-0",
+        typeBadgeVariants({ type, variant: "inline" }),
+        "bg-current",
+        shapeClass[type],
+        className,
+      )}
+    />
+  );
+}
+
 export type TypeBadgeProps = {
   type: MediaType;
   variant?: "inline" | "pill";
@@ -41,7 +57,7 @@ export type TypeBadgeProps = {
 export function TypeBadge({ type, variant = "inline", className }: TypeBadgeProps) {
   return (
     <span data-slot="type-badge" className={cn(typeBadgeVariants({ type, variant }), className)}>
-      <span aria-hidden="true" className={cn("size-[7px] shrink-0 bg-current", shapeClass[type])} />
+      <TypeShape type={type} />
       {labels[type]}
     </span>
   );

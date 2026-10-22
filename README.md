@@ -5,8 +5,8 @@
 Webapp personal para registrar películas, series y anime, calificarlos y recibir recomendaciones explicables.
 La especificación completa está en [docs/SPEC.md](docs/SPEC.md) y el diseño en [docs/design/](docs/design/).
 
-> Estado: **Fase 3 · Contratos y proveedores** (clientes de TMDB y AniList, búsqueda unificada en
-> `GET /api/search`).
+> Estado: **Fase 4 · Registro** (buscar y registrar en un clic, calificar con medios puntos, reseña,
+> etiquetas, progreso y re-visionados).
 
 ## Stack
 
@@ -60,6 +60,27 @@ ellos, con reintentos ante 429/5xx, y los tests los simulan con MSW: la CI nunca
 La búsqueda (`GET /api/search?q=…&type=all|movie|series|anime`) consulta ambos catálogos en paralelo,
 muestra la versión de AniList de cada anime (guardando su id de TMDB) y ordena por coincidencia con la
 búsqueda y popularidad. Si un proveedor falla, devuelve lo del otro.
+
+Los E2E usan un servidor falso de TMDB y AniList (`apps/web/tests/e2e/mock-providers.mjs`) con las mismas
+fixtures; la API lo apunta con `TMDB_API_URL` y `ANILIST_API_URL`, que en uso normal se dejan vacías.
+
+## Registrar lo que ves
+
+En **Buscar** (o con <kbd>⌘K</kbd> / <kbd>Ctrl</kbd>+<kbd>K</kbd> desde cualquier pantalla) cada resultado
+tiene **Pendiente** y **Visto**. "Visto" lo marca como terminado con el visionado de hoy y el aviso ofrece
+**Calificar** (nota de 1 a 10 con medios puntos, reseña corta, spoilers, etiquetas y fecha) o **Deshacer**.
+
+| Tecla                       | Acción                     |
+| --------------------------- | -------------------------- |
+| <kbd>↑</kbd> <kbd>↓</kbd>   | Moverse por los resultados |
+| <kbd>↵</kbd>                | Marcar como visto          |
+| <kbd>Alt</kbd>+<kbd>P</kbd> | Añadir a pendientes        |
+| <kbd>Esc</kbd>              | Limpiar la búsqueda        |
+
+Si pulsas <kbd>↵</kbd> antes de que lleguen los resultados, se aplica al primero en cuanto llegan.
+
+La API de biblioteca (`/api/library`) cubre además estados, progreso de episodios (al llegar al último
+pasa a Terminado) y re-visionados; sus pantallas llegan con la ficha en la Fase 5.
 
 ## Comandos
 

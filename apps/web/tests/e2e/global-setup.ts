@@ -25,8 +25,14 @@ export default function globalSetup(config: FullConfig) {
   runInDb("prisma/build/index.js", ["migrate", "deploy"], { DATABASE_URL });
 
   const runId = `e2e-${Date.now().toString(36)}`;
+  // Una invitación por proyecto (desktop, mobile) y por cada test que registra a alguien.
   for (const project of config.projects) {
-    runInDb("tsx/cli", ["prisma/seed.ts"], { DATABASE_URL, SEED_INVITE_CODE: `${runId}-${project.name}` });
+    for (const purpose of ["", "-search", "-undo", "-cmdk"]) {
+      runInDb("tsx/cli", ["prisma/seed.ts"], {
+        DATABASE_URL,
+        SEED_INVITE_CODE: `${runId}-${project.name}${purpose}`,
+      });
+    }
   }
   process.env.E2E_RUN_ID = runId;
 }
