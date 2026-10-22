@@ -7,6 +7,7 @@ import { type Auth, enabledSocialProviders } from "./auth";
 import type { Env } from "./env";
 import { healthRoute } from "./routes/health";
 import { invitesRoute } from "./routes/invites";
+import { libraryRoute } from "./routes/library";
 import { type SearchProviders, searchRoute } from "./routes/search";
 import { sessionRoutes } from "./routes/session";
 
@@ -46,7 +47,8 @@ export function createApp({ db, auth, env, providers, log = true }: AppDeps) {
   const api = new Hono()
     .on(["GET", "POST"], "/auth/*", (c) => auth.handler(c.req.raw))
     .route("/invites", invitesRoute({ db, auth, secureCookies: env.BETTER_AUTH_URL.startsWith("https://") }))
-    .route("/search", searchRoute({ auth, providers }))
+    .route("/search", searchRoute({ db, auth, providers }))
+    .route("/library", libraryRoute({ db, auth, providers }))
     .route("/", sessionRoutes({ auth, providers: enabledSocialProviders(env) }));
 
   return app

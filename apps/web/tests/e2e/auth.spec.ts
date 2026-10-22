@@ -32,7 +32,8 @@ test("registro por invitación, salir, volver a entrar e invitar a otra persona"
   await page.getByLabel("Contraseña").fill(password);
   await page.getByRole("button", { name: "Crear cuenta" }).click();
 
-  await expect(page.getByRole("heading", { level: 1, name: "Hola, Ana E2E" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Biblioteca" })).toBeVisible();
+  await expect(page.getByText("Hola, Ana E2E")).toBeVisible();
 
   // Con sesión, /login vuelve al inicio
   await page.goto("/login");
@@ -55,7 +56,8 @@ test("registro por invitación, salir, volver a entrar e invitar a otra persona"
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Contraseña").fill(password);
   await page.getByRole("button", { name: "Entrar" }).click();
-  await expect(page.getByRole("heading", { level: 1, name: "Hola, Ana E2E" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Biblioteca" })).toBeVisible();
+  await expect(page.getByText("Hola, Ana E2E")).toBeVisible();
 
   // Crear una invitación para un amigo
   await page.getByRole("button", { name: "Crear invitación" }).click();

@@ -34,6 +34,7 @@ const swatchClass: Record<ColorToken, string> = {
   border: "bg-border",
   input: "bg-input",
   sidebar: "bg-sidebar",
+  overlay: "bg-overlay",
   foreground: "bg-foreground",
   "muted-foreground": "bg-muted-foreground",
   "subtle-foreground": "bg-subtle-foreground",
@@ -54,6 +55,7 @@ const swatchClass: Record<ColorToken, string> = {
 const typeScaleClass: Record<(typeof typeScale)[number]["name"], string> = {
   display: "font-display text-display",
   page: "font-display text-page",
+  rating: "font-display text-rating text-brand",
   h1: "font-display text-h1",
   h2: "font-display text-h2",
   h3: "font-sans text-h3",
@@ -65,6 +67,7 @@ const typeScaleClass: Record<(typeof typeScale)[number]["name"], string> = {
 const typeSample: Record<(typeof typeScale)[number]["name"], string> = {
   display: "Biblioteca",
   page: "Para ti",
+  rating: "9.5",
   h1: "Frieren: Beyond Journey’s End",
   h2: "Porque calificaste Frieren con 9.5",
   h3: "Reparto y estudio",

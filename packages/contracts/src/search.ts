@@ -1,11 +1,6 @@
 import { z } from "zod";
 
-/** Tipos de contenido (mismos valores que el enum `MediaType` de la base de datos). */
-export const mediaTypeSchema = z.enum(["MOVIE", "SERIES", "ANIME"]);
-export type MediaType = z.infer<typeof mediaTypeSchema>;
-
-export const sourceSchema = z.enum(["TMDB", "ANILIST"]);
-export type Source = z.infer<typeof sourceSchema>;
+import { libraryStatusSchema, type MediaType, mediaTypeSchema, sourceSchema } from "./enums";
 
 /** Filtro de la búsqueda (en minúsculas porque viaja en la URL). */
 export const searchTypeFilterSchema = z.enum(["all", "movie", "series", "anime"]);
@@ -37,6 +32,13 @@ export const searchResultSchema = z.object({
   year: z.number().int().nullable(),
   posterUrl: z.url().nullable(),
   overview: z.string().nullable(),
+  /** Si ya está en la biblioteca del usuario: su entrada y estado (si no, null). */
+  library: z
+    .object({
+      entryId: z.string(),
+      status: libraryStatusSchema,
+    })
+    .nullable(),
 });
 export type SearchResult = z.infer<typeof searchResultSchema>;
 

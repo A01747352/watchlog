@@ -15,9 +15,13 @@ if (!env.TMDB_READ_TOKEN) {
 }
 const providers = {
   tmdb: env.TMDB_READ_TOKEN
-    ? createTmdbProvider({ token: env.TMDB_READ_TOKEN, language: env.TMDB_LANGUAGE })
+    ? createTmdbProvider({
+        token: env.TMDB_READ_TOKEN,
+        language: env.TMDB_LANGUAGE,
+        ...(env.TMDB_API_URL && { baseUrl: env.TMDB_API_URL }),
+      })
     : undefined,
-  anilist: createAniListProvider(),
+  anilist: createAniListProvider(env.ANILIST_API_URL ? { baseUrl: env.ANILIST_API_URL } : {}),
 };
 
 const app = createApp({ db, auth, env, providers, log: env.NODE_ENV !== "test" });

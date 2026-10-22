@@ -50,6 +50,9 @@
   --status-paused: oklch(0.74 0.012 285);
   --status-dropped: oklch(0.72 0.16 25);
 
+  /* Fondo bajo diálogos y hojas */
+  --overlay: oklch(0 0 0 / 0.6);
+
   /* Badges sobre póster: oscuros y fijos en ambos temas */
   --on-poster: rgb(12 12 16 / 0.72);
   --on-poster-foreground: oklch(1 0 0);
@@ -70,6 +73,8 @@
 
   /* Título de página: 28px en móvil, 34px en escritorio (≥1024px) */
   --page-title-size: 1.75rem;
+  /* Nota grande de RatingInput: 52px en móvil, 64px desde 640px (pantalla Calificar) */
+  --rating-size: 3.25rem;
 
   /* Radio base: lg = 10px; el resto se deriva en globals.css */
   --radius: 0.625rem;
@@ -113,6 +118,7 @@
   --status-paused: oklch(0.46 0.012 285);
   --status-dropped: oklch(0.54 0.19 25);
 
+  --overlay: oklch(0.2 0.02 285 / 0.4);
   --on-poster: rgb(12 12 16 / 0.72);
   --on-poster-foreground: oklch(1 0 0);
 
@@ -120,6 +126,12 @@
   --shadow-md: 0 1px 2px oklch(0.2 0.02 285 / 0.06), 0 8px 24px -10px oklch(0.2 0.02 285 / 0.18);
   --shadow-lg: 0 2px 4px oklch(0.2 0.02 285 / 0.06), 0 24px 48px -16px oklch(0.2 0.02 285 / 0.25);
   --shadow-poster: 0 1px 2px oklch(0.2 0.02 285 / 0.12), 0 10px 24px -12px oklch(0.2 0.02 285 / 0.35);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --rating-size: 4rem;
+  }
 }
 
 @media (min-width: 1024px) {

@@ -46,6 +46,7 @@
   --color-status-completed: var(--status-completed);
   --color-status-paused: var(--status-paused);
   --color-status-dropped: var(--status-dropped);
+  --color-overlay: var(--overlay);
   --color-on-poster: var(--on-poster);
   --color-on-poster-foreground: var(--on-poster-foreground);
   --color-sidebar: var(--sidebar);
@@ -68,6 +69,10 @@
   --text-page--line-height: 1.12;
   --text-page--letter-spacing: -0.02em;
   --text-page--font-weight: 600;
+  --text-rating: var(--rating-size);
+  --text-rating--line-height: 0.9;
+  --text-rating--letter-spacing: -0.04em;
+  --text-rating--font-weight: 600;
   --text-h1: 2rem;
   --text-h1--line-height: 1.15;
   --text-h1--letter-spacing: -0.02em;

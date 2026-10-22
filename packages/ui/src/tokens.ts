@@ -10,7 +10,18 @@ export type Theme = (typeof themes)[number];
 export const colorTokenGroups = [
   {
     name: "Superficies",
-    tokens: ["background", "card", "popover", "secondary", "muted", "accent", "border", "input", "sidebar"],
+    tokens: [
+      "background",
+      "card",
+      "popover",
+      "secondary",
+      "muted",
+      "accent",
+      "border",
+      "input",
+      "sidebar",
+      "overlay",
+    ],
   },
   { name: "Texto", tokens: ["foreground", "muted-foreground", "subtle-foreground"] },
   { name: "Acción y marca", tokens: ["primary", "brand", "ring", "destructive"] },
@@ -34,6 +45,7 @@ export const spacingScale = [8, 12, 16, 20, 24, 32, 40] as const;
 export const typeScale = [
   { name: "display", family: "display", spec: "Bricolage 40/44 · 600" },
   { name: "page", family: "display", spec: "Bricolage 34 (28 móvil) · 600" },
+  { name: "rating", family: "display", spec: "Bricolage 64 (52 móvil) · 600" },
   { name: "h1", family: "display", spec: "Bricolage 32/37 · 600" },
   { name: "h2", family: "display", spec: "Bricolage 22/28 · 600" },
   { name: "h3", family: "sans", spec: "Geist 17/23 · 600" },
