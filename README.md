@@ -5,8 +5,8 @@
 Webapp personal para registrar películas, series y anime, calificarlos y recibir recomendaciones explicables.
 La especificación completa está en [docs/SPEC.md](docs/SPEC.md) y el diseño en [docs/design/](docs/design/).
 
-> Estado: **Fase 2 · Datos y auth** (Prisma + Postgres, Better Auth con registro por invitación y rutas
-> protegidas).
+> Estado: **Fase 3 · Contratos y proveedores** (clientes de TMDB y AniList, búsqueda unificada en
+> `GET /api/search`).
 
 ## Stack
 
@@ -17,6 +17,7 @@ Monorepo **pnpm + Turborepo** en TypeScript estricto.
 | `apps/web`           | Frontend Next.js 16 (App Router) + Tailwind CSS v4 + next-themes |
 | `apps/api`           | Backend Hono sobre Node + Better Auth (`/api/*`, `/health`)      |
 | `packages/db`        | Prisma 7: esquema, migraciones, seed y cliente                   |
+| `packages/providers` | `MediaProvider`, clientes de TMDB y AniList, búsqueda unificada  |
 | `packages/ui`        | Tokens de diseño (variables CSS + `@theme`) y componentes shadcn |
 | `packages/contracts` | Esquemas Zod compartidos front ↔ back                            |
 | `packages/config`    | tsconfig, ESLint (con la regla de dependencias) y Prettier       |
@@ -48,6 +49,17 @@ GitHub y Google son opcionales: se activan al definir sus `*_CLIENT_ID` y `*_CLI
 (las URLs de callback están en `.env.example`).
 
 Para levantarlo todo en contenedores (db, migraciones, api y web): `docker compose up --build`.
+
+## Datos externos
+
+Películas y series vienen de [TMDB](https://www.themoviedb.org/) y el anime de
+[AniList](https://anilist.co/). Para TMDB pon tu "API Read Access Token" en `TMDB_READ_TOKEN`
+(sin él, la búsqueda solo usa AniList); AniList no necesita clave. Solo `packages/providers` habla con
+ellos, con reintentos ante 429/5xx, y los tests los simulan con MSW: la CI nunca llama a las APIs reales.
+
+La búsqueda (`GET /api/search?q=…&type=all|movie|series|anime`) consulta ambos catálogos en paralelo,
+muestra la versión de AniList de cada anime (guardando su id de TMDB) y ordena por coincidencia con la
+búsqueda y popularidad. Si un proveedor falla, devuelve lo del otro.
 
 ## Comandos
 

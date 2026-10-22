@@ -18,6 +18,10 @@ const envSchema = z
     GITHUB_CLIENT_SECRET: optional,
     GOOGLE_CLIENT_ID: optional,
     GOOGLE_CLIENT_SECRET: optional,
+    /** "API Read Access Token" de TMDB. Sin él, la búsqueda solo usa AniList. */
+    TMDB_READ_TOKEN: optional,
+    /** Idioma de títulos y sinopsis de TMDB. */
+    TMDB_LANGUAGE: z.string().default("es-ES"),
   })
   .superRefine((env, ctx) => {
     for (const provider of ["GITHUB", "GOOGLE"] as const) {

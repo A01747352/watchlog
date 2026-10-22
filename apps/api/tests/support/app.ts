@@ -2,6 +2,7 @@ import { createDbClient, type DbClient } from "@watchlog/db";
 import { afterAll, beforeEach, inject } from "vitest";
 
 import { createApp } from "../../src/app";
+import type { SearchProviders } from "../../src/routes/search";
 import { createAuth } from "../../src/auth";
 import type { Env } from "../../src/env";
 
@@ -13,14 +14,15 @@ export const testEnv = {
   DATABASE_URL: inject("testDatabaseUrl"),
   BETTER_AUTH_SECRET: "test-secret-test-secret-test-secret-123",
   BETTER_AUTH_URL: WEB_ORIGIN,
+  TMDB_LANGUAGE: "es-ES",
 } satisfies Env;
 
 /** App real (Hono + Better Auth + Prisma) contra la base de datos de test, limpia en cada test. */
-export function setupTestApp(overrides: Partial<Env> = {}) {
+export function setupTestApp(overrides: Partial<Env> = {}, providers: SearchProviders = {}) {
   const env: Env = { ...testEnv, ...overrides };
   const db = createDbClient(env.DATABASE_URL);
   const auth = createAuth({ db, env });
-  const app = createApp({ db, auth, env, log: false });
+  const app = createApp({ db, auth, env, providers, log: false });
 
   beforeEach(async () => {
     await db.$executeRawUnsafe(
@@ -64,4 +66,18 @@ export async function createInviteRow(
   return db.invite.create({
     data: { code, expiresAt: data.expiresAt ?? new Date(Date.now() + 60_000), usedBy: data.usedBy ?? null },
   });
+}
+
+/** Registra a un usuario (con invitación) y devuelve la cabecera Cookie con su sesión. */
+export async function signedInCookie(
+  app: ReturnType<typeof createApp>,
+  db: DbClient,
+  user = { name: "Ana", email: "ana@example.com", password: "contraseña-segura" },
+) {
+  const code = `inv-${Math.random().toString(36).slice(2, 10)}`;
+  await createInviteRow(db, code);
+  const verified = cookiesFrom(await app.request("/api/invites/verify", jsonRequest({ code })));
+  const res = await app.request("/api/auth/sign-up/email", jsonRequest(user, verified));
+  if (!res.ok) throw new Error(`No se pudo registrar al usuario de prueba: ${res.status}`);
+  return cookiesFrom(res, verified);
 }

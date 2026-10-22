@@ -19,7 +19,7 @@ describe("GET /health", () => {
   it("responde 503 si la base de datos no responde", async () => {
     const env = { ...testEnv, DATABASE_URL: "postgresql://nadie:nada@127.0.0.1:1/nada" };
     const db = createDbClient(env.DATABASE_URL);
-    const broken = createApp({ db, auth: createAuth({ db, env }), env, log: false });
+    const broken = createApp({ db, auth: createAuth({ db, env }), env, providers: {}, log: false });
 
     const res = await broken.request("/health");
     expect(res.status).toBe(503);

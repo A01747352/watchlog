@@ -1,0 +1,61 @@
+{
+  "id": 95396,
+  "name": "Separación",
+  "original_name": "Severance",
+  "original_language": "en",
+  "first_air_date": "2022-02-17",
+  "overview": "Mark Scout dirige un equipo en Lumon Industries cuyos empleados se han sometido a un procedimiento quirúrgico que separa sus recuerdos entre trabajo y vida personal. Este arriesgado experimento de con",
+  "poster_path": "/wrZjYKxObEaWZmjB7scQMYo40o8.jpg",
+  "backdrop_path": "/ixgFmf1X59PUZam2qbAfskx2gQr.jpg",
+  "adult": false,
+  "genres": [
+    {
+      "id": 18,
+      "name": "Drama"
+    },
+    {
+      "id": 9648,
+      "name": "Misterio"
+    },
+    {
+      "id": 10765,
+      "name": "Sci-Fi & Fantasy"
+    }
+  ],
+  "episode_run_time": [],
+  "number_of_episodes": 19,
+  "number_of_seasons": 3,
+  "created_by": [
+    {
+      "id": 3442409,
+      "name": "Dan Erickson"
+    }
+  ],
+  "last_episode_to_air": {
+    "runtime": 80
+  },
+  "keywords": {
+    "results": [
+      {
+        "name": "office",
+        "id": 1438
+      },
+      {
+        "name": "workplace",
+        "id": 6282
+      },
+      {
+        "name": "memory",
+        "id": 10937
+      },
+      {
+        "name": "office politics",
+        "id": 11923
+      },
+      {
+        "name": "brain surgery",
+        "id": 189401
+      }
+    ]
+  }
+}

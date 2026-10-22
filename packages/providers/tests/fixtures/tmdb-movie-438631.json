@@ -1,0 +1,67 @@
+{
+  "id": 438631,
+  "title": "Dune",
+  "original_title": "Dune",
+  "original_language": "en",
+  "release_date": "2021-09-15",
+  "overview": "En un lejano futuro, la galaxia conocida es gobernada mediante un sistema feudal de casas nobles bajo el mandato del Emperador. Las alianzas y la política giran entorno a un pequeño planeta, Dune,  de",
+  "poster_path": "/szcew6yyjcDvaL0isaPBk2e3nkF.jpg",
+  "backdrop_path": "/qVgZu5BTx6pu4owCvVOm4zjTfOi.jpg",
+  "adult": false,
+  "genres": [
+    {
+      "id": 878,
+      "name": "Ciencia ficción"
+    },
+    {
+      "id": 12,
+      "name": "Aventura"
+    }
+  ],
+  "runtime": 155,
+  "credits": {
+    "cast": [],
+    "crew": [
+      {
+        "name": "Denis Villeneuve",
+        "job": "Director"
+      },
+      {
+        "name": "Eric Roth",
+        "job": "Screenplay"
+      },
+      {
+        "name": "Denis Villeneuve",
+        "job": "Screenplay"
+      },
+      {
+        "name": "Jon Spaihts",
+        "job": "Screenplay"
+      }
+    ]
+  },
+  "keywords": {
+    "keywords": [
+      {
+        "id": 11195,
+        "name": "empire"
+      },
+      {
+        "id": 2964,
+        "name": "future"
+      },
+      {
+        "id": 6092,
+        "name": "army"
+      },
+      {
+        "id": 818,
+        "name": "based on novel or book"
+      },
+      {
+        "id": 530,
+        "name": "prophecy"
+      }
+    ]
+  }
+}

@@ -7,6 +7,7 @@ import { type Auth, enabledSocialProviders } from "./auth";
 import type { Env } from "./env";
 import { healthRoute } from "./routes/health";
 import { invitesRoute } from "./routes/invites";
+import { type SearchProviders, searchRoute } from "./routes/search";
 import { sessionRoutes } from "./routes/session";
 
 export type AppDeps = {
@@ -21,6 +22,8 @@ export type AppDeps = {
     | "GOOGLE_CLIENT_ID"
     | "GOOGLE_CLIENT_SECRET"
   >;
+  /** TMDB es opcional (sin token, la búsqueda usa solo AniList). */
+  providers: SearchProviders;
   log?: boolean;
 };
 
@@ -28,7 +31,7 @@ export type AppDeps = {
  * La API vive bajo /api (web reenvía /api/* aquí con un rewrite); /health queda en la raíz
  * para Docker y monitoreo.
  */
-export function createApp({ db, auth, env, log = true }: AppDeps) {
+export function createApp({ db, auth, env, providers, log = true }: AppDeps) {
   const app = new Hono();
   if (log) app.use(logger());
 
@@ -43,6 +46,7 @@ export function createApp({ db, auth, env, log = true }: AppDeps) {
   const api = new Hono()
     .on(["GET", "POST"], "/auth/*", (c) => auth.handler(c.req.raw))
     .route("/invites", invitesRoute({ db, auth, secureCookies: env.BETTER_AUTH_URL.startsWith("https://") }))
+    .route("/search", searchRoute({ auth, providers }))
     .route("/", sessionRoutes({ auth, providers: enabledSocialProviders(env) }));
 
   return app
@@ -52,6 +56,3 @@ export function createApp({ db, auth, env, log = true }: AppDeps) {
     )
     .route("/api", api);
 }
-
-/** Tipo de la app para un futuro cliente RPC (Fase 3). */
-export type AppType = ReturnType<typeof createApp>;

@@ -1,0 +1,25 @@
+{
+  "name": "@watchlog/providers",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "@watchlog/config": "workspace:*",
+    "eslint": "^9.39.5",
+    "msw": "^3.0.3",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.5"
+  }
+}

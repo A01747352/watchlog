@@ -1,0 +1,46 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "id": 693134,
+      "media_type": "movie",
+      "title": "Dune: Parte dos",
+      "original_title": "Dune: Part Two",
+      "original_language": "en",
+      "release_date": "2024-02-27",
+      "genre_ids": [878, 12],
+      "overview": "Sigue el viaje mítico de Paul Atreides mientras se une a Chani y los Fremen en una guerra de venganza contra los conspiradores que destruyeron a su familia. Al ",
+      "poster_path": "/xCHmhHeO7aOCMlzcNukGH6Q7EiD.jpg",
+      "adult": false,
+      "popularity": 63.3284
+    },
+    {
+      "id": 412656,
+      "media_type": "movie",
+      "title": "Chaos Walking",
+      "original_title": "Chaos Walking",
+      "original_language": "en",
+      "release_date": "2021-02-24",
+      "genre_ids": [14, 878, 12],
+      "overview": "Todd Hewitt es el último chico de Prentisstown, una pequeña comunidad cuya peculiaridad (aparte del hecho de que no hay mujeres) es que todos escuchan los pensa",
+      "poster_path": "/k3zMduK3u1ckKt1HHcvPDbdhOap.jpg",
+      "adult": false,
+      "popularity": 9.4421
+    },
+    {
+      "id": 603,
+      "media_type": "movie",
+      "title": "Matrix",
+      "original_title": "The Matrix",
+      "original_language": "en",
+      "release_date": "1999-03-31",
+      "genre_ids": [28, 878],
+      "overview": "Thomas Anderson lleva una doble vida: por el día es programador en una importante empresa de software, y por la noche un hacker informático llamado Neo. Su vida",
+      "poster_path": "/tpW2X2DvxtTHJ61iJ7zNYYrJihs.jpg",
+      "adult": false,
+      "popularity": 46.3474
+    }
+  ],
+  "total_pages": 1,
+  "total_results": 3
+}
