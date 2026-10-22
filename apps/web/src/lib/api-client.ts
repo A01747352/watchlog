@@ -5,7 +5,7 @@ import type { z } from "zod";
  * Cliente de la API validado con los esquemas de @watchlog/contracts.
  * En el navegador usa rutas relativas (/api/* se reenvía a la API con un rewrite);
  * en el servidor llama directamente a API_URL y hay que pasarle la cookie de la petición.
- * El cliente RPC de Hono llega en la Fase 3.
+ * Por qué contratos y no Hono RPC: docs/adr/0001-cliente-api-con-contratos.md.
  */
 export type ApiResult<T> = { ok: true; data: T } | { ok: false; status: number; error: ApiError["error"] };
 

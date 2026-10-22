@@ -26,6 +26,9 @@ export default defineConfig({
   testDir: "./tests/e2e",
   globalSetup: "./tests/e2e/global-setup.ts",
   fullyParallel: true,
+  // En local, 2 workers: con más, cada uno abre su Chromium y en máquinas justas de RAM
+  // (Docker + navegador + editor) los tiempos se disparan. La CI usa el valor por defecto.
+  ...(!process.env.CI && { workers: 2 }),
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   reporter: process.env.CI ? [["github"], ["html", { open: "never" }]] : "list",
@@ -54,6 +57,8 @@ export default defineConfig({
         GITHUB_CLIENT_SECRET: "",
         GOOGLE_CLIENT_ID: "",
         GOOGLE_CLIENT_SECRET: "",
+        // Los E2E nunca llaman a TMDB (cuota y condiciones de uso).
+        TMDB_READ_TOKEN: "",
       },
     },
     {

@@ -1,0 +1,34 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "id": 209867,
+      "media_type": "tv",
+      "name": "Frieren: Tras finalizar el viaje",
+      "original_name": "葬送のフリーレン",
+      "original_language": "ja",
+      "origin_country": ["JP"],
+      "first_air_date": "2023-09-29",
+      "genre_ids": [16, 10759, 18, 10765],
+      "overview": "La maga Frieren formaba parte del grupo del héroe Himmel, quienes derrotaron al Rey Demonio tras un viaje de 10 años y devolvieron la paz al reino. Frieren es u",
+      "poster_path": "/3NyQpXmkaBVWgYM8miDHEFqGMCB.jpg",
+      "adult": false,
+      "popularity": 98.6393
+    },
+    {
+      "id": 360097,
+      "media_type": "movie",
+      "title": "Kleine frieren auch im Sommer",
+      "original_title": "Kleine frieren auch im Sommer",
+      "original_language": "de",
+      "release_date": "1978-01-01",
+      "genre_ids": [],
+      "overview": "",
+      "poster_path": null,
+      "adult": false,
+      "popularity": 1.0642
+    }
+  ],
+  "total_pages": 1,
+  "total_results": 2
+}
